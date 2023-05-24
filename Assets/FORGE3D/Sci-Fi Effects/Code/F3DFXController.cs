@@ -30,7 +30,7 @@ namespace FORGE3D
         // Current firing socket
         private int curSocket = 0;
 
-        // Timer reference                
+        // Timer reference
         private int timerID = -1;
 
         [Header("Turret setup")] public Transform[] TurretSocket; // Sockets reference
@@ -94,7 +94,7 @@ namespace FORGE3D
 
         private void Awake()
         {
-            // Initialize singleton  
+            // Initialize singleton
             instance = this;
 
                 // Initialize bullet shells particles

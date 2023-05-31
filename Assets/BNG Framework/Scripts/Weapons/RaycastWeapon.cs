@@ -179,7 +179,7 @@ namespace BNG {
         /// How far back to move the slide on fire
         /// </summary>
         [Tooltip("How far back to move the slide on fire")]
-        public float SlideDistance = -0.028f;
+        public float SlideDistance = -0.028f;        
 
         /// <summary>
         /// Should the slide be forced back if we shoot the last bullet
@@ -254,7 +254,7 @@ namespace BNG {
                 MuzzleFlashObject.SetActive(false);
             }
 
-            ws = GetComponentInChildren<WeaponSlide>();
+            ws = GetComponentInChildren<WeaponSlide>();            
 
             updateChamberedBullet();
         }
@@ -262,7 +262,7 @@ namespace BNG {
         public override void OnTrigger(float triggerValue) {
 
 
-            // Sanitize for angles
+            // Sanitize for angles 
             triggerValue = Mathf.Clamp01(triggerValue);
 
             // Update trigger graphics

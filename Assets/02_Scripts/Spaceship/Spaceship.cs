@@ -8,12 +8,17 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Spaceship : MonoBehaviour
 {
+    [Header("필수 할당 요소")]
+    [SerializeField, Tooltip("우주선 비주얼 할당해주세용")] private Transform spaceshipVisual;
+
+    [Header("이동 세부 설정")]
     [SerializeField] private float speed = 2000f;
     [SerializeField] private float rollAmount;
     [SerializeField] private float pitchAmount;
     [SerializeField] private float yawAmount;
     [SerializeField] private float lerpAmount;
 
+    [Header("부스터 게임오브젝트 객체")]
     public List<GameObject> boosterObjects;
 
     private List<Vector3> boosterOriginalLocalScaleList = new();
@@ -31,7 +36,7 @@ public class Spaceship : MonoBehaviour
 
     private void Start()
     {
-        rigid = GetComponent<Rigidbody>();
+        rigid = spaceshipVisual.GetComponent<Rigidbody>();
 
         foreach (GameObject go in boosterObjects)
         {

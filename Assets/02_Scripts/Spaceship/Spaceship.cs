@@ -2,10 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Rigidbody를 기반으로 움직이는 우주선
-/// </summary>
-[RequireComponent(typeof(Rigidbody))]
 public class Spaceship : MonoBehaviour
 {
     [Header("필수 할당 요소")]
@@ -17,15 +13,21 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private float pitchAmount;
     [SerializeField] private float yawAmount;
     [SerializeField] private float lerpAmount;
+    [SerializeField] private float accelAmount; //가속력
+    [SerializeField] private float maxSpeed = 3001.7f;  //최대 속력
+    [SerializeField] private float calibrateAmount = 10f;  //기본 속력 보정값
+    [SerializeField, Tooltip("자동 감속 여부")] private bool enableCalibrate = false; //속도 보정을 적용할 것인지 여부
+    
 
     [Header("부스터 게임오브젝트 객체")]
     public List<GameObject> boosterObjects;
+    public int boosterGear; //0 ~ 5
 
     private List<Vector3> boosterOriginalLocalScaleList = new();
-    //private List<Vector3>
-
     private Vector3 rotateValue;
     private Vector2 inputVector;
+    private float speedReciprocal;  //maxSpeed의 역수
+    private float defaultSpeed = 600f;
 
     private Rigidbody rigid;
 
@@ -36,13 +38,15 @@ public class Spaceship : MonoBehaviour
 
     private void Start()
     {
-        rigid = spaceshipVisual.GetComponent<Rigidbody>();
+        rigid = GetComponent<Rigidbody>();
 
         foreach (GameObject go in boosterObjects)
         {
             Vector3 originalScale = go.transform.localScale;
             boosterOriginalLocalScaleList.Add(originalScale);
         }
+
+        speedReciprocal = 1 / maxSpeed;
     }
 
     private void FixedUpdate()
@@ -58,8 +62,18 @@ public class Spaceship : MonoBehaviour
 
         //rotate
         rigid.MoveRotation(rigid.rotation * Quaternion.Euler(rotateValue * Time.fixedDeltaTime));
+
+        float accelEase = (maxSpeed - speed) * speedReciprocal;
+        speed += boosterGear * accelAmount * accelEase * Time.fixedDeltaTime;
+
+        //자동 속도 보정 여부
+        if(boosterGear == 0 && enableCalibrate)
+        {
+            speed += (defaultSpeed - speed) * speedReciprocal * calibrateAmount * Time.fixedDeltaTime;
+        }
+
         //move forward
-        rigid.velocity = transform.forward * speed * Time.fixedDeltaTime;
+        rigid.velocity = transform.forward * speed;
     }
 
     public void GetRotateVector(Vector2 inputVector)

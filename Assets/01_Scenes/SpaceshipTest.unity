@@ -948,6 +948,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Rig Advanced
       objectReference: {fileID: 0}
+    - target: {fileID: 2683195716791022644, guid: 4ac7df741a9c0a2418ec19477729ee3d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2683195716791022646, guid: 4ac7df741a9c0a2418ec19477729ee3d,
         type: 3}
       propertyPath: m_RootOrder
@@ -1338,7 +1343,7 @@ PrefabInstance:
     - target: {fileID: 851362063492668907, guid: 991ea23b1b3f8fb4d911d944a99e1102,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -31
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 851362063492668907, guid: 991ea23b1b3f8fb4d911d944a99e1102,
         type: 3}
@@ -1348,17 +1353,17 @@ PrefabInstance:
     - target: {fileID: 851362063492668907, guid: 991ea23b1b3f8fb4d911d944a99e1102,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 851362063492668907, guid: 991ea23b1b3f8fb4d911d944a99e1102,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 851362063492668907, guid: 991ea23b1b3f8fb4d911d944a99e1102,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 851362063492668907, guid: 991ea23b1b3f8fb4d911d944a99e1102,
         type: 3}

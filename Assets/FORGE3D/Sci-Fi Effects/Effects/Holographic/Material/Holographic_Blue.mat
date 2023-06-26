@@ -32,7 +32,7 @@ Material:
     m_Floats:
     - _AlphaCutoff: 0.5
     - _Fade: 1
-    - _Flicker: 0.467
+    - _Flicker: 0.5
     - _FresMult: 1.23
     - _FresMultOut: 0.24
     - _FresPow: 4.21

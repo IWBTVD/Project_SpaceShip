@@ -19,11 +19,11 @@ public class Make : MonoBehaviour
 
     void Update()
     {
-        //Vector3 startPoint = objectA.position;
-        //Vector3 endPoint = new Vector3(objectA.position.x, ground.position.y, objectA.position.z);
+        Vector3 startPoint = objectA.position;
+        Vector3 endPoint = new Vector3(objectA.position.x, ground.position.y, objectA.position.z);
         //
-        //lineRenderer.SetPosition(0, startPoint);
-        //lineRenderer.SetPosition(1, endPoint);
+        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(1, endPoint);
         //
         //bool isGrabbed = grabbable.isGrabbed;
         //
@@ -43,12 +43,14 @@ public class Make : MonoBehaviour
 
     public void ActivateLineObject()
     {
+        Debug.Log("Activate Line Object");
         gameObject.SetActive(true);
     }
 
     // lineObject를 비활성화하는 함수
     public void DeactivateLineObject()
     {
+        Debug.Log("deactivate Line Object");
         gameObject.SetActive(false);
     }
 }

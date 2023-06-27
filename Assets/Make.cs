@@ -19,35 +19,35 @@ public class Make : MonoBehaviour
 
     void Update()
     {
-        Vector3 startPoint = objectA.position;
-        Vector3 endPoint = new Vector3(objectA.position.x, ground.position.y, objectA.position.z);
-
-        lineRenderer.SetPosition(0, startPoint);
-        lineRenderer.SetPosition(1, endPoint);
-
-        bool isGrabbed = grabbable.isGrabbed;
-
-        if (!wasGrabbed && isGrabbed)
-        {
-            ActivateLineObject();
-            wasGrabbed = true;
-        }
-        else if (wasGrabbed && !isGrabbed) // 추가된 부분: 물체를 놓았을 때 lineObject를 비활성화
-        {
-            DeactivateLineObject();
-            wasGrabbed = false; // 수정된 부분: lineObject를 비활성화할 때 wasGrabbed 변수도 초기화
-        }
-
-        wasGrabbed = isGrabbed;
+        //Vector3 startPoint = objectA.position;
+        //Vector3 endPoint = new Vector3(objectA.position.x, ground.position.y, objectA.position.z);
+        //
+        //lineRenderer.SetPosition(0, startPoint);
+        //lineRenderer.SetPosition(1, endPoint);
+        //
+        //bool isGrabbed = grabbable.isGrabbed;
+        //
+        //if (!wasGrabbed && isGrabbed)
+        //{
+        //    ActivateLineObject();
+        //    wasGrabbed = true;
+        //}
+        //else if (wasGrabbed && !isGrabbed) // 추가된 부분: 물체를 놓았을 때 lineObject를 비활성화
+        //{
+        //    DeactivateLineObject();
+        //    wasGrabbed = false; // 수정된 부분: lineObject를 비활성화할 때 wasGrabbed 변수도 초기화
+        //}
+        //
+        //wasGrabbed = isGrabbed;
     }
 
-    void ActivateLineObject()
+    public void ActivateLineObject()
     {
         gameObject.SetActive(true);
     }
 
     // lineObject를 비활성화하는 함수
-    void DeactivateLineObject()
+    public void DeactivateLineObject()
     {
         gameObject.SetActive(false);
     }

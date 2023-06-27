@@ -9,7 +9,6 @@ public class Make : MonoBehaviour
     public Transform ground; // 바닥 객체의 Transform 컴포넌트를 참조할 변수
 
     public Grabbable grabbable;
-    public GameObject lineObject;
     private bool wasGrabbed = false;
 
     void Start()
@@ -31,6 +30,7 @@ public class Make : MonoBehaviour
         if (!wasGrabbed && isGrabbed)
         {
             ActivateLineObject();
+            wasGrabbed = true;
         }
         else if (wasGrabbed && !isGrabbed) // 추가된 부분: 물체를 놓았을 때 lineObject를 비활성화
         {
@@ -43,12 +43,12 @@ public class Make : MonoBehaviour
 
     void ActivateLineObject()
     {
-        lineObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     // lineObject를 비활성화하는 함수
     void DeactivateLineObject()
     {
-        lineObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

@@ -53,6 +53,7 @@ namespace Oculus.Interaction
         private ITransformer _activeTransformer = null;
         private ITransformer OneGrabTransformer;
         private ITransformer TwoGrabTransformer;
+        public bool isGrabbed;
 
         protected override void Awake()
         {
@@ -154,6 +155,9 @@ namespace Oculus.Interaction
             }
 
             _activeTransformer.BeginTransform();
+
+            //If grabbed
+            isGrabbed = true;
         }
 
         private void UpdateTransform()
@@ -174,6 +178,7 @@ namespace Oculus.Interaction
             }
             _activeTransformer.EndTransform();
             _activeTransformer = null;
+            isGrabbed = false;
         }
 
         protected override void OnDisable()
@@ -184,6 +189,7 @@ namespace Oculus.Interaction
             }
 
             base.OnDisable();
+            
         }
 
         #region Inject
@@ -202,4 +208,6 @@ namespace Oculus.Interaction
 
         #endregion
     }
+
+    
 }

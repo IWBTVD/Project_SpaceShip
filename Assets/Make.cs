@@ -5,40 +5,46 @@ using UnityEngine;
 public class Make : MonoBehaviour
 {
     private LineRenderer lineRenderer;
-    public Transform objectA; // A 객체의 Transform 컴포넌트를 참조할 변수
-    public Transform ground; // 바닥 객체의 Transform 컴포넌트를 참조할 변수
+    private Transform myTransform; // A 객체의 Transform 컴포넌트를 참조할 변수
+    public GameObject ground; // 바닥 객체의 Transform 컴포넌트를 참조할 변수
 
-    public Grabbable grabbable;
-    private bool wasGrabbed = false;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
+        myTransform = GetComponent<Transform>();
     }
 
     void Update()
     {
-        Vector3 startPoint = objectA.position;
-        Vector3 endPoint = new Vector3(objectA.position.x, ground.position.y, objectA.position.z);
-        //
-        lineRenderer.SetPosition(0, startPoint);
-        lineRenderer.SetPosition(1, endPoint);
-        //
-        //bool isGrabbed = grabbable.isGrabbed;
-        //
-        //if (!wasGrabbed && isGrabbed)
-        //{
-        //    ActivateLineObject();
-        //    wasGrabbed = true;
-        //}
-        //else if (wasGrabbed && !isGrabbed) // 추가된 부분: 물체를 놓았을 때 lineObject를 비활성화
-        //{
-        //    DeactivateLineObject();
-        //    wasGrabbed = false; // 수정된 부분: lineObject를 비활성화할 때 wasGrabbed 변수도 초기화
-        //}
-        //
-        //wasGrabbed = isGrabbed;
+        RaycastHit hit;
+        float raycastDistance = 1.0f; // Raycast 거리
+
+        Vector3 startPoint;
+
+        // A 개체의 아래 방향으로 Raycast를 쏩니다.
+        if (Physics.Raycast(this.transform.position, -Vector3.up, out hit, raycastDistance))
+        {
+            // 충돌한 개체가 B 개체인지 확인합니다.
+            if (hit.collider.gameObject == ground)
+            {
+                // A 개체와 B 개체 사이에 다른 개체가 없다면 A 개체는 B 개체 위에 떠있는 것으로 간주합니다.
+                startPoint = myTransform.position;
+                Vector3 endPoint = new Vector3(myTransform.position.x, ground.transform.position.y, myTransform.position.z);
+                
+                lineRenderer.SetPosition(0, startPoint);
+                lineRenderer.SetPosition(1, endPoint);
+
+            }
+            else{
+                startPoint = myTransform.position;
+                
+                lineRenderer.SetPosition(0, startPoint);
+                lineRenderer.SetPosition(1, startPoint);
+            }
+        }
+
     }
 
     public void ActivateLineObject()
@@ -53,4 +59,7 @@ public class Make : MonoBehaviour
         Debug.Log("deactivate Line Object");
         gameObject.SetActive(false);
     }
+
+    
+
 }

@@ -2,7 +2,7 @@ using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using UnityEngine;
 
-public class Make : MonoBehaviour
+public class DrawVirtualBottomLine : MonoBehaviour
 {
     private LineRenderer lineRenderer;
     private Transform myTransform; // A 객체의 Transform 컴포넌트를 참조할 변수

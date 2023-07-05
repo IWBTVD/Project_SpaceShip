@@ -7,7 +7,9 @@ public class DrawVirtualBottomLine : MonoBehaviour
     private LineRenderer lineRenderer;
     private Transform myTransform; // A 객체의 Transform 컴포넌트를 참조할 변수
     public GameObject ground; // 바닥 객체의 Transform 컴포넌트를 참조할 변수
+    public GameObject OriginObject;
 
+    private Vector3 endPoint;
 
     void Start()
     {
@@ -31,7 +33,7 @@ public class DrawVirtualBottomLine : MonoBehaviour
             {
                 // A 개체와 B 개체 사이에 다른 개체가 없다면 A 개체는 B 개체 위에 떠있는 것으로 간주합니다.
                 startPoint = myTransform.position;
-                Vector3 endPoint = new Vector3(myTransform.position.x, ground.transform.position.y, myTransform.position.z);
+                endPoint = new Vector3(myTransform.position.x, ground.transform.position.y, myTransform.position.z);
                 
                 lineRenderer.SetPosition(0, startPoint);
                 lineRenderer.SetPosition(1, endPoint);
@@ -47,6 +49,7 @@ public class DrawVirtualBottomLine : MonoBehaviour
 
     }
 
+    // lineObject를 활성하는 함수
     public void ActivateLineObject()
     {
         Debug.Log("Activate Line Object");
@@ -60,6 +63,9 @@ public class DrawVirtualBottomLine : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    
+    public void MoveOriginObject()
+    {
+        OriginObject.transform.position = endPoint;
+    }
 
 }

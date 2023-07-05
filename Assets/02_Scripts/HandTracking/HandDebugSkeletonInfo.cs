@@ -58,9 +58,9 @@ public class HandDebugSkeletonInfo : MonoBehaviour
             Debug.Log($"{handSkeleton.GetSkeletonType()}: bone Id = {bone.Id}, pos = {bone.Transform.position}");
         }
 
-        Debug.Log($"{handSkeleton.GetSkeletonType()}: num of bone = {handSkeleton.GetCurrentNumBones()}");
-        Debug.Log($"{handSkeleton.GetSkeletonType()}: num of skinnable bone = {handSkeleton.GetCurrentNumSkinnableBones()}");
-        Debug.Log($"{handSkeleton.GetSkeletonType()}: start bone Id = {handSkeleton.GetCurrentStartBoneId()}");
-        Debug.Log($"{handSkeleton.GetSkeletonType()}: end bone Id = {handSkeleton.GetCurrentEndBoneId()}");
+        //Debug.Log($"{handSkeleton.GetSkeletonType()}: num of bone = {handSkeleton.GetCurrentNumBones()}");
+        //Debug.Log($"{handSkeleton.GetSkeletonType()}: num of skinnable bone = {handSkeleton.GetCurrentNumSkinnableBones()}");
+        //Debug.Log($"{handSkeleton.GetSkeletonType()}: start bone Id = {handSkeleton.GetCurrentStartBoneId()}");
+        //Debug.Log($"{handSkeleton.GetSkeletonType()}: end bone Id = {handSkeleton.GetCurrentEndBoneId()}");
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIvisible : MonoBehaviour
+public class UnitHUDCanvas : MonoBehaviour
 {
 
     public void ActiveUI()

@@ -12,7 +12,6 @@ public class SpaceUnit : MonoBehaviour
 
     public void Awake()
     {
-        
     }
 
     public void Start()

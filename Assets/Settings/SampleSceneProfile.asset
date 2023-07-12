@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   threshold:
     m_OverrideState: 1
     m_Value: 1
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c981ee17d53ea42b3cb31ca0b891a4, type: 3}
   m_Name: MKGlow
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   showEditorMainBehavior:
     m_OverrideState: 1
     m_Value: 1
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   debugView:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   quality:
     m_OverrideState: 1
@@ -152,7 +152,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0
   workflow:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   selectiveRenderLayerMask:
     m_OverrideState: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
   bloomThreshold:
     m_OverrideState: 1
     m_Value:
-      minValue: 1.25
+      minValue: 1.5
       maxValue: 10
   bloomScattering:
     m_OverrideState: 1

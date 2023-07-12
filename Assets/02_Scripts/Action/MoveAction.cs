@@ -10,6 +10,9 @@ public class MoveAction : BaseAction
 
     [SerializeField] private float maxMoveDistance = 5f;
 
+    //잡으면 이동 준비
+    //놓으면 이동
+
     private void Update()
     {
         if (!isActive) return;
@@ -17,7 +20,7 @@ public class MoveAction : BaseAction
 
     public override string GetActionName()
     {
-        throw new NotImplementedException();
+        return "이동";
     }
 
     public override void TakeAction(Vector3 worldPosition, Action onActionComplete)

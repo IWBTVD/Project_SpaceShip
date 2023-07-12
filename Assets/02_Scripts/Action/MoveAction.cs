@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -10,8 +10,8 @@ public class MoveAction : BaseAction
 
     [SerializeField] private float maxMoveDistance = 5f;
 
-    //ÀâÀ¸¸é ÀÌµ¿ ÁØºñ
-    //³õÀ¸¸é ÀÌµ¿
+    //ì¡ìœ¼ë©´ ì´ë™ ì¤€ë¹„
+    //ë†“ìœ¼ë©´ ì´ë™
 
     private void Update()
     {
@@ -20,7 +20,7 @@ public class MoveAction : BaseAction
 
     public override string GetActionName()
     {
-        return "ÀÌµ¿";
+        return "ì´ë™";
     }
 
     public override void TakeAction(Vector3 worldPosition, Action onActionComplete)

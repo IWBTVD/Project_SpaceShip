@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +16,7 @@ public class StationRotator : MonoBehaviour
         topPart.Rotate(Vector3.up, topPartRotationSpeed * Time.deltaTime);
         bottomPart.Rotate(Vector3.up, topPartRotationSpeed * Time.deltaTime);
 
-        // Áß¾ÓºÎ¸¦ ½Ã°è ¹Ý´ë ¹æÇâÀ¸·Î È¸Àü
+        // ì¤‘ì•™ë¶€ë¥¼ ì‹œê³„ ë°˜ëŒ€ ë°©í–¥ìœ¼ë¡œ íšŒì „
         transform.Rotate(Vector3.up, middlePartRotationSpeed * Time.deltaTime);
     }
 }

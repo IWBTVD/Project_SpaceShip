@@ -1,32 +1,31 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spaceship : MonoBehaviour
 {
-    [Header("ÇÊ¼ö ÇÒ´ç ¿ä¼Ò")]
-    [SerializeField, Tooltip("¿ìÁÖ¼± ºñÁÖ¾ó ÇÒ´çÇØÁÖ¼¼¿ë")] private Transform spaceshipVisual;
+    [Header("í•„ìˆ˜ í• ë‹¹ ìš”ì†Œ")]
+    [SerializeField, Tooltip("ìš°ì£¼ì„  ë¹„ì£¼ì–¼ í• ë‹¹í•´ì£¼ì„¸ìš©")] private Transform spaceshipVisual;
 
-    [Header("ÀÌµ¿ ¼¼ºÎ ¼³Á¤")]
+    [Header("ì´ë™ ì„¸ë¶€ ì„¤ì •")]
     [SerializeField] private float speed = 2000f;
     [SerializeField] private float rollAmount;
     [SerializeField] private float pitchAmount;
     [SerializeField] private float yawAmount;
     [SerializeField] private float lerpAmount;
-    [SerializeField] private float accelAmount; //°¡¼Ó·Â
-    [SerializeField] private float maxSpeed = 3001.7f;  //ÃÖ´ë ¼Ó·Â
-    [SerializeField] private float calibrateAmount = 10f;  //±âº» ¼Ó·Â º¸Á¤°ª
-    [SerializeField, Tooltip("ÀÚµ¿ °¨¼Ó ¿©ºÎ")] private bool enableCalibrate = false; //¼Óµµ º¸Á¤À» Àû¿ëÇÒ °ÍÀÎÁö ¿©ºÎ
-    
+    [SerializeField] private float accelAmount; //ê°€ì†ë ¥
+    [SerializeField] private float maxSpeed = 3001.7f;  //ìµœëŒ€ ì†ë ¥
+    [SerializeField] private float calibrateAmount = 10f;  //ê¸°ë³¸ ì†ë ¥ ë³´ì •ê°’
+    [SerializeField, Tooltip("ìë™ ê°ì† ì—¬ë¶€")] private bool enableCalibrate = false; //ì†ë„ ë³´ì •ì„ ì ìš©í•  ê²ƒì¸ì§€ ì—¬ë¶€
 
-    [Header("ºÎ½ºÅÍ °ÔÀÓ¿ÀºêÁ§Æ® °´Ã¼")]
+    [Header("ë¶€ìŠ¤í„° ê²Œì„ì˜¤ë¸Œì íŠ¸ ê°ì²´")]
     public List<GameObject> boosterObjects;
     public int boosterGear; //0 ~ 5
 
     private List<Vector3> boosterOriginalLocalScaleList = new();
     private Vector3 rotateValue;
     private Vector2 inputVector;
-    private float speedReciprocal;  //maxSpeedÀÇ ¿ª¼ö
+    private float speedReciprocal;  //maxSpeedì˜ ì—­ìˆ˜
     private float defaultSpeed = 600f;
 
     private Rigidbody rigid;
@@ -66,7 +65,7 @@ public class Spaceship : MonoBehaviour
         float accelEase = (maxSpeed - speed) * speedReciprocal;
         speed += boosterGear * accelAmount * accelEase * Time.fixedDeltaTime;
 
-        //ÀÚµ¿ ¼Óµµ º¸Á¤ ¿©ºÎ
+        //ìë™ ì†ë„ ë³´ì • ì—¬ë¶€
         if(boosterGear == 0 && enableCalibrate)
         {
             speed += (defaultSpeed - speed) * speedReciprocal * calibrateAmount * Time.fixedDeltaTime;
@@ -98,7 +97,7 @@ public class Spaceship : MonoBehaviour
             speed = 3000f;
         }
 
-        //¼Óµµ 2000ÀÌ ±âº»°ª : 1
+        //ì†ë„ 2000ì´ ê¸°ë³¸ê°’ : 1
         float boosterScale = speed / 2000f;
         foreach(GameObject go in boosterObjects)
         {

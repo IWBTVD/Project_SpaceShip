@@ -5,7 +5,7 @@ using UnityEngine;
 public class DrawVirtualBottomLine : MonoBehaviour
 {
     private LineRenderer lineRenderer;
-    private Transform myTransform; // A 객체의 Transform 컴포넌트를 참조할 변수
+    //private Transform myTransform; // A 객체의 Transform 컴포넌트를 참조할 변수
     public GameObject ground; // 바닥 객체의 Transform 컴포넌트를 참조할 변수
     public GameObject OriginObject;
 
@@ -15,7 +15,6 @@ public class DrawVirtualBottomLine : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
-        myTransform = GetComponent<Transform>();
     }
 
     void Update()
@@ -32,16 +31,16 @@ public class DrawVirtualBottomLine : MonoBehaviour
             if (hit.collider.gameObject == ground)
             {
                 // A 개체와 B 개체 사이에 다른 개체가 없다면 A 개체는 B 개체 위에 떠있는 것으로 간주합니다.
-                startPoint = myTransform.position;
-                endPoint = new Vector3(myTransform.position.x, ground.transform.position.y, myTransform.position.z);
-                
+                startPoint = transform.position;
+                endPoint = new Vector3(transform.position.x, ground.transform.position.y, transform.position.z);
+
                 lineRenderer.SetPosition(0, startPoint);
                 lineRenderer.SetPosition(1, endPoint);
 
             }
             else{
-                startPoint = myTransform.position;
-                
+                startPoint = transform.position;
+
                 lineRenderer.SetPosition(0, startPoint);
                 lineRenderer.SetPosition(1, startPoint);
             }

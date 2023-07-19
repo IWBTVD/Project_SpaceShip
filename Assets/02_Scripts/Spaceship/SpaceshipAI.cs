@@ -11,6 +11,9 @@ public class SpaceshipAI : MonoBehaviour
     [SerializeField] private float speedLerpAmount;
     [SerializeField] private float turningForce;
 
+    [SerializeField] private float zRotateMaxThreshold = 0.5f;
+    [SerializeField] private float zRotateAmount = 90;
+
     [SerializeField] private List<Transform> initialWaypoints;
 
     private Queue<Transform> waypointQueue;
@@ -46,7 +49,7 @@ public class SpaceshipAI : MonoBehaviour
     {
         CheckWaypoint();
         Rotate();
-        //ZAxisRotate();
+        ZAxisRotate();
         Move();
     }
 
@@ -105,13 +108,28 @@ public class SpaceshipAI : MonoBehaviour
         {
             float lerpAmount = Mathf.SmoothDampAngle(delta, 0.0f, ref rotateAmount, turningTime);
             lerpAmount = 1.0f - (lerpAmount / delta);
+
+            Vector3 eulerAngle = lookRotation.eulerAngles;
+            eulerAngle.z += zRotateValue * zRotateAmount;
+            lookRotation = Quaternion.Euler(eulerAngle);
+
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, lerpAmount);
         }
     }
 
+    /// <summary>
+    /// zRotateValue를 조정하는 메소드
+    /// </summary>
     private void ZAxisRotate()
     {
+        currRotY = transform.eulerAngles.y;
+        float diff = prevRotY - currRotY;
 
+        if (diff > 180) diff -= 360;
+        if (diff < -180) diff += 360;
+
+        prevRotY = transform.eulerAngles.y;
+        zRotateValue = Mathf.Lerp(zRotateValue, Mathf.Clamp(diff / zRotateMaxThreshold, -1, 1), turningForce / Time.deltaTime);
     }
 
     private void Move()

@@ -9,7 +9,7 @@ public class MissileLauncher : MonoBehaviour
     
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
+        if(Input.GetKeyDown(KeyCode.S)){
             GameObject t_missile = Instantiate(m_goMissile, m_tfMissileSpawn.position, m_tfMissileSpawn.rotation);
             t_missile.GetComponent<Rigidbody>().velocity = Vector3.forward * 5f;
         }

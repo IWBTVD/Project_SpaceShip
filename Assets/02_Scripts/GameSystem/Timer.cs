@@ -9,52 +9,6 @@ using Photon.Pun;
 //[RequireComponent(typeof(PhotonView))]
 public class Timer : MonoBehaviour
 {
-    /*
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Pause = !Pause;
-    }
-    [SerializeField] private TMP_Text  uiText;
-
-    public int Duration;
-
-    private int remainingDuration;
-
-    private bool Pause;
-
-    private void Start()
-    {
-        Being(Duration);
-    }
-
-    private void Being(int Second)
-    {
-        remainingDuration = Second;
-        StartCoroutine(UpdateTimer());
-    }
-
-    private IEnumerator UpdateTimer()
-    {
-        while(remainingDuration >= 0)
-        {
-            if (!Pause)
-            {
-                uiText.text = $"{remainingDuration / 60:00}:{remainingDuration % 60:00}";
-                remainingDuration--;
-                yield return new WaitForSeconds(1f);
-            }
-            yield return null;
-        }
-        OnEnd();
-    }
-
-    private void OnEnd()
-    {
-        //End Time , if want Do something
-        print("End");
-    }
-    */
-
     [SerializeField] private TMP_Text uiText;
 
     /// <summary>
@@ -140,5 +94,25 @@ public class Timer : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void SetFirstPreparedPlayer(int playerNum)
+    {
+        // 만약 아직 미정 -1 이면
+        if(firstPreparedPlayer != -1){
+            firstPreparedPlayer = playerNum;
+
+            //만약 blue 먼저 하면
+            if(firstPreparedPlayer == 0){
+                WorldBoardManager.Instance.blueturn = true;
+            }
+            else{ // red 먼저 하면
+                WorldBoardManager.Instance.redturn = true;
+            }
+            Debug.Log("첫번째 순서는 " + firstPreparedPlayer);
+        }
+        else{ // 2등 순서
+            Debug.Log("이미 첫번째 순서가 정해 졌습니다.");
+        }
     }
 }

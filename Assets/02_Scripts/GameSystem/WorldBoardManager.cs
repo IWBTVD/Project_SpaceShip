@@ -12,8 +12,6 @@ public class WorldBoardManager : MonoBehaviour
     public bool redturn;
     public bool blueturn;
 
-    public Queue<int> playerQueue;
-
     /// <summary>
     /*  
     처음에 일정 시간 ex 3분 안에 이번 게임에 사용할 말과 위치 등등 정하기..
@@ -66,8 +64,6 @@ public class WorldBoardManager : MonoBehaviour
     {
         // 각 bool값 초기화
         initTurnValue();
-        // 순서 Queue 초기화
-        playerQueue = new Queue<int>();
     }   
 
     public void PauseGame()

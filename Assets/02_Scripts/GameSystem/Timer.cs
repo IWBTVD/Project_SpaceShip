@@ -55,11 +55,16 @@ public class Timer : MonoBehaviour
     }
     */
 
+    [SerializeField] private TMP_Text uiText;
+
     /// <summary>
     /// 준비 시간
     /// </summary>
     public float prepareTime = 120f;
-    public float currentTime = 0f;
+    /// <summary>
+    /// 현재 남아있는 시간
+    /// </summary>
+    public float remainedTime = 0f;
 
     /// <summary>
     /// 방장이 준비되었는지(내가 준비되었는지가 아니라 방장이 준비되었는지를 기준으로 함. 멀티플레이기 때문에 '나'를 주체로 하면 코드가 괜히 복잡해질 우려가 있음
@@ -90,6 +95,8 @@ public class Timer : MonoBehaviour
         //isTimerStart값을 쓰는건 private으로 설정됨. 값을 변경시 디버그 로그가 호출됨
         private set {
             isTimerStart = value;
+            //현재 시간을 준비시간만큼 설정
+            remainedTime = prepareTime;
             //isTimerStart가 참이면 시작되었습니다! 거짓이면 끝났습니다!
             Debug.Log($"준비 시간이 " + (isTimerStart? "시작되었습니다!" : "끝났습니다!"));
         }
@@ -104,8 +111,9 @@ public class Timer : MonoBehaviour
     {
         if(IsTimerStart)
         {
-            //타이머에 시간 더함
-            currentTime += Time.deltaTime;
+            //타이머 작동
+            remainedTime -= Time.deltaTime;
+            uiText.text = $"{remainedTime / 60:00}:{remainedTime % 60:00}";
 
             //준비 시간이 종료되었는지 검사
             if (TimesUp())
@@ -119,7 +127,7 @@ public class Timer : MonoBehaviour
     /// <returns>준비 시간이 끝났으면 true</returns>
     public bool TimesUp()
     {
-        if (currentTime >= prepareTime)
+        if (remainedTime <= 0)
         {
             Debug.Log("제한 시간 종료!!!");
             return true;

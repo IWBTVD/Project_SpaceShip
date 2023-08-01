@@ -12,8 +12,9 @@ public class DrawVirtualBottomLine : MonoBehaviour
     private Vector3 endPoint;
 
     //Slot일꺼임
-    GameObject touchedObject;
+    GameObject BeaconObject;
     
+    private bool isUnit;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -70,17 +71,43 @@ public class DrawVirtualBottomLine : MonoBehaviour
         OriginObject.transform.position = endPoint;
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("Slot"))
+    private void OnTriggerEnter(Collider other) 
+    {
+        if (other.gameObject.CompareTag("Beacon"))
         {
-            
+            Debug.Log("Beacon Enter detected: 1");
+            // Move the OriginObject (ship) to the center of the touched beacon
+            BeaconObject = other.gameObject;
+
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.gameObject.CompareTag("Slot"))
+        if (other.gameObject.CompareTag("Beacon"))
         {
-           
+            Debug.Log("Beacon Exit detected: 1");
+            // Move the OriginObject (ship) to the center of the touched beacon
+            BeaconObject = null;
         }
     }
+
+    public void MoveToCenter()
+{
+    if (isUnit)
+    {
+        Debug.LogError("Unit is assigned!");
+        return;
+    }
+
+    if (BeaconObject != null)
+    {
+        transform.position = BeaconObject.transform.position;
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+    }
+    else
+    {
+        Debug.LogError("BeaconObject is not assigned!");
+    }
+}
+
 }

@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - SamplesInfoPanel
   - SpaceShip
+  - Beacon
   layers:
   - Default
   - TransparentFX

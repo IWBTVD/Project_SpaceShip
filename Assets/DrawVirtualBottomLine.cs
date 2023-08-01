@@ -7,7 +7,7 @@ public class DrawVirtualBottomLine : MonoBehaviour
     private LineRenderer lineRenderer;
     //private Transform myTransform; // A 객체의 Transform 컴포넌트를 참조할 변수
     public GameObject ground; // 바닥 객체의 Transform 컴포넌트를 참조할 변수
-    public GameObject OriginObject;
+    public GameObject ActualVisual;
 
     private Vector3 endPoint;
 
@@ -50,6 +50,9 @@ public class DrawVirtualBottomLine : MonoBehaviour
             }
         }
 
+        if(Input.GetKeyDown(KeyCode.A)){
+            MoveOriginObject();
+        }
     }
 
     // lineObject를 활성하는 함수
@@ -68,46 +71,8 @@ public class DrawVirtualBottomLine : MonoBehaviour
 
     public void MoveOriginObject()
     {
-        OriginObject.transform.position = endPoint;
+        ActualVisual.transform.position = endPoint;
     }
 
-    private void OnTriggerEnter(Collider other) 
-    {
-        if (other.gameObject.CompareTag("Beacon"))
-        {
-            Debug.Log("Beacon Enter detected: 1");
-            // Move the OriginObject (ship) to the center of the touched beacon
-            BeaconObject = other.gameObject;
-
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        if (other.gameObject.CompareTag("Beacon"))
-        {
-            Debug.Log("Beacon Exit detected: 1");
-            // Move the OriginObject (ship) to the center of the touched beacon
-            BeaconObject = null;
-        }
-    }
-
-    public void MoveToCenter()
-{
-    if (isUnit)
-    {
-        Debug.LogError("Unit is assigned!");
-        return;
-    }
-
-    if (BeaconObject != null)
-    {
-        transform.position = BeaconObject.transform.position;
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-    }
-    else
-    {
-        Debug.LogError("BeaconObject is not assigned!");
-    }
-}
 
 }

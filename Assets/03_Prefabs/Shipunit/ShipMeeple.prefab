@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 3213019304431968625}
   m_Layer: 0
   m_Name: ShipMeeple
-  m_TagString: SpaceShip
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -691,6 +691,18 @@ MonoBehaviour:
       - m_Target: {fileID: 3213019304920410487}
         m_TargetAssemblyTypeName: DrawVirtualBottomLine, Assembly-CSharp
         m_MethodName: MoveOriginObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4858739418323409548}
+        m_TargetAssemblyTypeName: SpaceShipPlaceToBeacon, Assembly-CSharp
+        m_MethodName: MoveToCenter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1159,7 +1171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 0}
-  OriginObject: {fileID: 0}
 --- !u!1 &3213019304989785238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1834,6 +1845,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1251918485771260, guid: 41a827e1c8551f143a8856c9331983b7, type: 3}
+      propertyPath: m_TagString
+      value: SpaceShip
+      objectReference: {fileID: 0}
     - target: {fileID: 4921508814669472, guid: 41a827e1c8551f143a8856c9331983b7, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1900,6 +1915,11 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 64737606955095186, guid: 41a827e1c8551f143a8856c9331983b7,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41a827e1c8551f143a8856c9331983b7, type: 3}
 --- !u!64 &3202919746620938487 stripped
@@ -1914,3 +1934,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3213019303998000229}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3211773058111496089 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1251918485771260, guid: 41a827e1c8551f143a8856c9331983b7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3213019303998000229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &4855182349315849817
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3211773058111496089}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4858739418323409548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3211773058111496089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c04ba89f80c031449f2bc419ca49cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

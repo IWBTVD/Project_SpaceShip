@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class test : MonoBehaviour
+public class SpaceShipPlaceToBeacon : MonoBehaviour
 {
     GameObject BeaconObject;
     
     private bool isUnit;
+
+    public GameObject origin;
     private void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Beacon"))
@@ -28,21 +30,30 @@ public class test : MonoBehaviour
     }
 
     public void MoveToCenter()
-{
-    if (isUnit)
     {
-        Debug.LogError("Unit is assigned!");
-        return;
+        if (isUnit)
+        {
+            Debug.LogError("Unit is assigned!");
+            return;
+        }
+
+        if (BeaconObject != null)
+        {
+            transform.position = BeaconObject.transform.position;
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+        else
+        {
+            Debug.LogError("BeaconObject is not assigned!");
+        }
     }
 
-    if (BeaconObject != null)
-    {
-        transform.position = BeaconObject.transform.position;
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+    //test 용
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.O)){
+            MoveToCenter();
+            origin.transform.position = transform.position;
+        }
     }
-    else
-    {
-        Debug.LogError("BeaconObject is not assigned!");
-    }
-}
 }

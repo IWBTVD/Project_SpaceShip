@@ -8,6 +8,7 @@ TagManager:
   - RoomLight
   - Bullet
   - SamplesInfoPanel
+  - SpaceShip
   layers:
   - Default
   - TransparentFX

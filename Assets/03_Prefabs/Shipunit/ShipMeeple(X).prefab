@@ -1261,7 +1261,7 @@ GameObject:
   - component: {fileID: 2103518318133936198}
   m_Layer: 0
   m_Name: ShipMeeple(X)
-  m_TagString: Untagged
+  m_TagString: SpaceShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

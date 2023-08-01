@@ -11,6 +11,9 @@ public class DrawVirtualBottomLine : MonoBehaviour
 
     private Vector3 endPoint;
 
+    //Slot일꺼임
+    GameObject touchedObject;
+    
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -67,4 +70,17 @@ public class DrawVirtualBottomLine : MonoBehaviour
         OriginObject.transform.position = endPoint;
     }
 
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Slot"))
+        {
+            
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.CompareTag("Slot"))
+        {
+           
+        }
+    }
 }

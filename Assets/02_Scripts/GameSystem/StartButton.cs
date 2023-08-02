@@ -25,7 +25,7 @@ public class StartButton : MonoBehaviour
     }
 
     public void StartGame(){
-        WorldBoardManager.Instance.NextStage();
+        WorldBoardManager.Instance.SetStandByPhase();
         gameObject.SetActive(false);
     }
 }

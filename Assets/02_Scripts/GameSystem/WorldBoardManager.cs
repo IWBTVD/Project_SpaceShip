@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Photon.Pun;
 
-public class WorldBoardManager : MonoBehaviour
+public class WorldBoardManager : MonoBehaviourPun, IPunObservable
 {
 
     public enum GameStage
@@ -13,11 +14,10 @@ public class WorldBoardManager : MonoBehaviour
         GamePlaying, // 게임을 플레이하는 단계
         EndofGame, // 게임이 종료 되고 결과를 나타내는 단계
         Reseting, // 게임을 초기화하고 다음 게임을 준비하는 단계
-
     }
 
     // 현재 유저 턴 상태
-    public enum Turn { None, Blue, Red}
+    public enum Turn { None, Blue, Red }
 
     public bool isTimerStart = false;
     [SerializeField] private TMP_Text uiText;
@@ -47,7 +47,7 @@ public class WorldBoardManager : MonoBehaviour
     /// <summary>
     /// 타이머가 시작되었는지
     /// </summary>
-    
+
 
     public Transform boardPlane;
 
@@ -57,35 +57,32 @@ public class WorldBoardManager : MonoBehaviour
     private GameStage currentStage;
     private GameStage currentTurn;
 
-    
+
 
     /// <summary>
-    /*  
-    처음에 일정 시간 ex 3분 안에 이번 게임에 사용할 말과 위치 등등 정하기..
-
-    먼저 완료버튼을 누른 순서대로 차례 우선권 갖기
-    
-    */
+    ///처음에 일정 시간 ex 3분 안에 이번 게임에 사용할 말과 위치 등등 정하기..
+    ///
+    ///먼저 완료버튼을 누른 순서대로 차례 우선권 갖기
     /// </sumary>
 
-    
+
     /*
         각팀 차례 일때
     장기 말을 잡을 수 있게 하는 bool값 ture
     잡았을 때 잡은 물체를 받을 변수 NowGarbObject
     이동후 선택한 상대방 물체를 받을 변수 NowSetTargetObject
-    
+
     공격이나 타케팅등 해당 이벤트를 처리 (각자 오브젝트에서)
 
-    
-    Card가 펼쳐질 차례를 알려줄 bool값 
+
+    Card가 펼쳐질 차례를 알려줄 bool값
     Card에서 나온 이벤트를 받을 변수 (ex 적 공격, 유성우, 등..)
 
     */
 
-    public static WorldBoardManager Instance {get; private set;}
+    public static WorldBoardManager Instance { get; private set; }
     private BeaconManager beaconManager;
-    
+
 
     void Awake()
     {
@@ -95,7 +92,7 @@ public class WorldBoardManager : MonoBehaviour
             Instance = this;
 
             //씬 전환이 되더라도 파괴되지 않게 한다.
-            //gameObject만으로도 이 스크립트가 컴포넌트로서 붙어있는 Hierarchy상의 게임오브젝트라는 뜻이지만, 
+            //gameObject만으로도 이 스크립트가 컴포넌트로서 붙어있는 Hierarchy상의 게임오브젝트라는 뜻이지만,
             //나는 헷갈림 방지를 위해 this를 붙여주기도 한다.
             DontDestroyOnLoad(this.gameObject);
         }
@@ -115,8 +112,8 @@ public class WorldBoardManager : MonoBehaviour
     public void InitGame()
     {
         // 각 bool값 초기화
-        initTurnValue();
-    }   
+        InitTurnValue();
+    }
 
     public void PauseGame()
     {
@@ -139,7 +136,7 @@ public class WorldBoardManager : MonoBehaviour
     }
 
     private void Update() {
-        if(isTimerStart)
+        if (isTimerStart)
         {
             // timer run
             remainedTime -= Time.deltaTime;
@@ -151,7 +148,7 @@ public class WorldBoardManager : MonoBehaviour
         }
     }
 
-     public bool TimesUp()
+    public bool TimesUp()
     {
         if (remainedTime <= 0)
         {
@@ -159,7 +156,7 @@ public class WorldBoardManager : MonoBehaviour
             return true;
         }
 
-        else if(isHostReady && isMemberReady)
+        else if (isHostReady && isMemberReady)
         {
             uiText.text = "Ready to play";
             Debug.Log("양 측 플레이어가 모두 준비를 마침");
@@ -183,12 +180,12 @@ public class WorldBoardManager : MonoBehaviour
         }
     }
 
-    private void initTurnValue(){
+    private void InitTurnValue() {
 
     }
 
-    
-     public void SetGameStage(GameStage stage)
+
+    public void SetGameStage(GameStage stage)
     {
         currentStage = stage;
 
@@ -196,24 +193,24 @@ public class WorldBoardManager : MonoBehaviour
         switch (currentStage)
         {
             case GameStage.Standby:
-                
+
                 break;
 
             case GameStage.UnitSetting:
-                
-                
+
+
                 break;
 
             case GameStage.GamePlaying:
-                
+
                 break;
 
             case GameStage.EndofGame:
-                
+
                 break;
 
             case GameStage.Reseting:
-                
+
                 break;
         }
     }
@@ -254,4 +251,41 @@ public class WorldBoardManager : MonoBehaviour
         get { return currentStage; }
     }
 
+    public void SetStandByPhase()
+    {
+        //타이머 작동시키는 RPC함수 호출
+        photonView.RPC(nameof(StartTimerRPC), RpcTarget.All);
+    }
+
+    /// <summary>
+    /// 타이머 호출
+    /// </summary>
+    [PunRPC]
+    public void StartTimerRPC()
+    {
+        Debug.Log("타이머가 작동되기 시작하였음!");
+        NextStage();
+    }
+
+    /// <summary>
+    /// 스탠드바이 페이즈 종료
+    /// </summary>
+    [PunRPC]
+    public void EndStandByPhaseRPC()
+    {
+
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(isHostReady);
+        }
+
+        else
+        {
+            isHostReady = (bool)stream.ReceiveNext();
+        }
+    }
 }

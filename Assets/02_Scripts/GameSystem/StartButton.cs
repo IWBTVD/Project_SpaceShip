@@ -25,6 +25,7 @@ public class StartButton : MonoBehaviour
     }
 
     public void StartGame(){
+        // 타이머 시작을 포톤으로 알림 이 안에 다음 단계로 진입 코드 담겨 있음
         WorldBoardManager.Instance.SetStandByPhase();
         gameObject.SetActive(false);
     }

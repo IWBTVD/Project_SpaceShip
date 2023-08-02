@@ -6,26 +6,35 @@ public class SetOrderButton : MonoBehaviour
 {
     [SerializeField] Oculus.Interaction.InteractableUnityEventWrapper eventWrapper;
 
+    private WorldBoardManager worldBoardManager;
+
+    //0 red 1 blue
+    public int teamColor;
+
+    private void Start() {
+        worldBoardManager = WorldBoardManager.Instance;
+    }
     public void OnEnable()
     {
         //이벤트 구독
-        eventWrapper.WhenSelect.AddListener(SendButtonNum);
+        eventWrapper.WhenSelect.AddListener(SendTeamColor);
     }
 
     public void OnDisable()
     {
         //disable될 때 이벤트 구독 해제
-        eventWrapper.WhenSelect.RemoveListener(SendButtonNum);
+        eventWrapper.WhenSelect.RemoveListener(SendTeamColor);
     }
 
     public void OnDestroy()
     {
         //destroy될 때 이벤트 구독 해제
-        eventWrapper.WhenSelect.RemoveListener(SendButtonNum);
+        eventWrapper.WhenSelect.RemoveListener(SendTeamColor);
     }
 
-    public void SendButtonNum(){
-        
+    public void SendTeamColor(){
+        worldBoardManager.SetOrder(teamColor);
+
         gameObject.SetActive(false);
     }
 }

@@ -14,7 +14,7 @@ public class BeaconManager : MonoBehaviour
     }
 
     // List to store all beacon instances
-    private List<SpaceshipPresetBeacon> allBeacons = new List<SpaceshipPresetBeacon>();
+    private List<Beacon> allBeacons = new List<Beacon>();
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class BeaconManager : MonoBehaviour
     }
 
     // Add beacon to the list when created
-    public void RegisterBeacon(SpaceshipPresetBeacon beacon)
+    public void RegisterBeacon(Beacon beacon)
     {
         allBeacons.Add(beacon);
     }
@@ -46,7 +46,7 @@ public class BeaconManager : MonoBehaviour
         return isUnitValues;
     }
 
-    public List<SpaceshipPresetBeacon> GetAllBeacons()
+    public List<Beacon> GetAllBeacons()
     {
         return allBeacons;
     }

@@ -17,7 +17,7 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     }
 
     // 현재 유저 턴 상태
-    public enum Turn { None, Blue, Red }
+    public enum Turn { None, Red, Blue }
 
     public bool isTimerStart = false;
     [SerializeField] private TMP_Text uiText;
@@ -40,7 +40,7 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     public bool isMemberReady = false;
 
     /// <summary>
-    /// 누가 먼저 준비를 끝마쳤는가? 0 : 방장, 1 : 방원
+    /// 누가 먼저 준비를 끝마쳤는가? 1 : 방장, 2 : 방원
     /// </summary>
     public int firstPreparedPlayer = -1;
 
@@ -55,7 +55,7 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     public float worldSize = 100f;
 
     private GameStage currentStage;
-    private GameStage currentTurn;
+    private Turn currentTurn;
 
 
 
@@ -106,7 +106,6 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
 
         //처음 시작할때 단계를 설정한다.
         SetGameStage(GameStage.Standby);
-        remainedTime = prepareTime;
     }
 
     public void InitGame()
@@ -160,31 +159,31 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
         {
             uiText.text = "Ready to play";
             Debug.Log("양 측 플레이어가 모두 준비를 마침");
-            NextStage();
-            DisActiveAllBeacon();
+            NextStage(); // 지금은 각자 돌아감 뭔가 서버에서 하면 좋을거 같음
             return true;
         }
 
         return false;
     }
 
-    private void DisActiveAllBeacon()
+    /// <summary>
+    /// GamePlaying stage에서 비콘 비활성화
+    /// </summary>
+    private void DisactiveAllBeacon()
     {
-        // Get all beacons from BeaconManager
-        List<SpaceshipPresetBeacon> allBeacons = BeaconManager.Instance.GetAllBeacons();
+        // 모든 Becon 정보 받아오기
+        List<Beacon> allBeacons = BeaconManager.Instance.GetAllBeacons();
 
-        // Set active to false for all beacons
+        // 모든 비콘 비활성화
         foreach (var beacon in allBeacons)
         {
             beacon.gameObject.SetActive(false);
         }
     }
 
-    private void InitTurnValue() {
-
-    }
-
-
+    /// <summary>
+    /// 상태에 관한 부분
+    /// </sumary>
     public void SetGameStage(GameStage stage)
     {
         currentStage = stage;
@@ -197,12 +196,13 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
                 break;
 
             case GameStage.UnitSetting:
-
+                remainedTime = prepareTime;
+                isTimerStart = true;
 
                 break;
 
             case GameStage.GamePlaying:
-
+                DisactiveAllBeacon();
                 break;
 
             case GameStage.EndofGame:
@@ -251,6 +251,59 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
         get { return currentStage; }
     }
 
+
+    /// <summary>
+    /// 순서에 관한 부분
+    /// </sumary>
+    public void SetOrder(int teamColor)
+    {   
+        // -1 이면 첫번째 누른 사람이니까 해당 번호를 할당
+        if(firstPreparedPlayer == -1){
+            firstPreparedPlayer = teamColor;
+            currentTurn = (Turn)firstPreparedPlayer;
+            Debug.Log("현재 순서는 "+CurrentTurn + firstPreparedPlayer);
+        }
+
+        switch(teamColor){
+            case 1:
+                isHostReady = true;
+                break;
+            case 2:
+                isMemberReady = true;
+                break;
+        }
+
+    }
+
+    public void nextTurn(){
+
+        switch (currentTurn)
+        {
+            case Turn.None:
+                currentTurn = Turn.Red; 
+                break;
+            case Turn.Red:
+                currentTurn = Turn.Blue; 
+                break;
+            case Turn.Blue:
+                currentTurn = Turn.Red; 
+                break;
+        }
+    }
+
+    public Turn CurrentTurn
+    {
+        get { return currentTurn; }
+    }
+    
+
+    
+    private void InitTurnValue() 
+    {
+        currentTurn = Turn.None;
+
+    }
+
     public void SetStandByPhase()
     {
         //타이머 작동시키는 RPC함수 호출
@@ -281,11 +334,15 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(isHostReady);
+            stream.SendNext(isMemberReady);
+            stream.SendNext(firstPreparedPlayer);
         }
 
         else
         {
             isHostReady = (bool)stream.ReceiveNext();
+            isMemberReady = (bool)stream.ReceiveNext();
+            firstPreparedPlayer = (int)stream.ReceiveNext();
         }
     }
 }

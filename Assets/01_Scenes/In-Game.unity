@@ -1245,7 +1245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9feb9ff760b844f802c07c6906f6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTimerStart: 1
+  isTimerStart: 0
   uiText: {fileID: 1411031148}
   prepareTime: 120
   remainedTime: 0
@@ -4789,6 +4789,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 251227865158026198, guid: ba1617fe6a330894a90ce8fd45fd13de,
         type: 3}
+      propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 251227865158026198, guid: ba1617fe6a330894a90ce8fd45fd13de,
+        type: 3}
       propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 682779283}
@@ -4801,6 +4806,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SpaceShipPlaceToBeacon, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 251227865158026198, guid: ba1617fe6a330894a90ce8fd45fd13de,
+        type: 3}
+      propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 251227865158026202, guid: ba1617fe6a330894a90ce8fd45fd13de,
         type: 3}
@@ -7793,6 +7803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventWrapper: {fileID: 1800158445}
+  teamColor: 2
 --- !u!1001 &1044757223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15655,6 +15666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventWrapper: {fileID: 1357443217}
+  teamColor: 1
 --- !u!1001 &1667497253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28137,6 +28149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 251227865158026198, guid: ba1617fe6a330894a90ce8fd45fd13de,
         type: 3}
+      propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 251227865158026198, guid: ba1617fe6a330894a90ce8fd45fd13de,
+        type: 3}
       propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4310578058112259519}
@@ -28149,6 +28166,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SpaceShipPlaceToBeacon, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 251227865158026198, guid: ba1617fe6a330894a90ce8fd45fd13de,
+        type: 3}
+      propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 251227865158026202, guid: ba1617fe6a330894a90ce8fd45fd13de,
         type: 3}
@@ -28994,6 +29016,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   origin: {fileID: 1457186362}
+--- !u!114 &4310578058112259529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279528310865357054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 4310578058112259519}
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &5703132492265558408
 PrefabInstance:
   m_ObjectHideFlags: 0

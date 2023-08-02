@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class WorldBoardManager : MonoBehaviour
 {
+
+    public enum GameStage
+    {
+        Standby, //이때는 둘다 로그인중
+        UnitSetting, // 제한시간안에 말을 세팅하는 단계
+        GamePlaying, // 게임을 플레이하는 단계
+        EndofGame, // 게임이 종료 되고 결과를 나타내는 단계
+        Reseting, // 게임을 초기화하고 다음 게임을 준비하는 단계
+
+    }
+
+
     public Transform boardPlane;
 
     public float boardSize = 5f;
@@ -11,6 +23,8 @@ public class WorldBoardManager : MonoBehaviour
 
     public bool redturn;
     public bool blueturn;
+
+    private GameStage currentStage;
 
     /// <summary>
     /*  
@@ -58,6 +72,9 @@ public class WorldBoardManager : MonoBehaviour
             //그래서 이미 전역변수인 instance에 인스턴스가 존재한다면 자신(새로운 씬의 GameMgr)을 삭제해준다.
             Destroy(this.gameObject);
         }
+
+        //처음 시작할때 단계를 설정한다.
+        SetGameStage(GameStage.Standby);
     }
 
     public void InitGame()
@@ -92,5 +109,70 @@ public class WorldBoardManager : MonoBehaviour
     }
 
     
+     public void SetGameStage(GameStage stage)
+    {
+        currentStage = stage;
+
+        // Perform any specific actions based on the stage
+        switch (currentStage)
+        {
+            case GameStage.Standby:
+                // Actions for the standby stage
+                break;
+
+            case GameStage.UnitSetting:
+                // Actions for UnitSetting
+                
+                break;
+
+            case GameStage.GamePlaying:
+                // Actions for GamePlaying
+                break;
+
+            case GameStage.EndofGame:
+                // Actions for EndofGame
+                break;
+
+            case GameStage.Reseting:
+                // Actions for Reseting
+                break;
+        }
+    }
+
+    public void NextStage()
+    {
+        switch (currentStage)
+        {
+            case GameStage.Standby:
+                SetGameStage(GameStage.UnitSetting);
+                Debug.Log("Current stage: Standby -> Next stage: UnitSetting");
+                break;
+
+            case GameStage.UnitSetting:
+                SetGameStage(GameStage.GamePlaying);
+                Debug.Log("Current stage: UnitSetting -> Next stage: GamePlaying");
+                break;
+
+            case GameStage.GamePlaying:
+                SetGameStage(GameStage.EndofGame);
+                Debug.Log("Current stage: GamePlaying -> Next stage: EndofGame");
+                break;
+
+            case GameStage.EndofGame:
+                SetGameStage(GameStage.Reseting);
+                Debug.Log("Current stage: EndofGame -> Next stage: Reseting");
+                break;
+
+            case GameStage.Reseting:
+                SetGameStage(GameStage.Standby);
+                Debug.Log("Current stage: Reseting -> Next stage: Standby");
+                break;
+        }
+    }
+
+    public GameStage CurrentStage
+    {
+        get { return currentStage; }
+    }
 
 }

@@ -5,8 +5,7 @@ using UnityEngine;
 public class SpaceShipPlaceToBeacon : MonoBehaviour
 {
     GameObject BeaconObject;
-    
-    private bool isUnit;
+    SpaceshipPresetBeacon spaceshipScript;
 
     public GameObject origin;
     private void OnTriggerEnter(Collider other) 
@@ -14,9 +13,10 @@ public class SpaceShipPlaceToBeacon : MonoBehaviour
         if (other.gameObject.CompareTag("Beacon"))
         {
             Debug.Log("Beacon Enter detected: 1");
-            // Move the OriginObject (ship) to the center of the touched beacon
+            
+            // 비콘과 닿을때 비콘 정보와 스크립트를 읽어오기
             BeaconObject = other.gameObject;
-
+            spaceshipScript = BeaconObject.GetComponent<SpaceshipPresetBeacon>();
         }
     }
 
@@ -24,36 +24,38 @@ public class SpaceShipPlaceToBeacon : MonoBehaviour
         if (other.gameObject.CompareTag("Beacon"))
         {
             Debug.Log("Beacon Exit detected: 1");
-            // Move the OriginObject (ship) to the center of the touched beacon
+            
+            // 비콘과 빠질때 비콘 정보와 스크립트를 읽어오기
             BeaconObject = null;
+            spaceshipScript = null;
         }
     }
 
     public void MoveToCenter()
     {
-        if (isUnit)
+        if (spaceshipScript.isUnit == true)
         {
-            Debug.LogError("Unit is assigned!");
+            Debug.Log("Unit is assigned!");
             return;
         }
 
         if (BeaconObject != null)
         {
+            //위치 이동
             transform.position = BeaconObject.transform.position;
+            origin.transform.position = BeaconObject.transform.position;
+            //방향 이동
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            origin.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+
+            spaceshipScript.isUnit = true;
+            
         }
         else
         {
-            Debug.LogError("BeaconObject is not assigned!");
+            Debug.Log("BeaconObject is not assigned!");
+            return;
         }
     }
 
-    //test 용
-
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.O)){
-            MoveToCenter();
-            origin.transform.position = transform.position;
-        }
-    }
 }

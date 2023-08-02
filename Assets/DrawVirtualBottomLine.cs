@@ -50,9 +50,6 @@ public class DrawVirtualBottomLine : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.A)){
-            MoveOriginObject();
-        }
     }
 
     // lineObject를 활성하는 함수

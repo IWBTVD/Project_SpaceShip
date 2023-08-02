@@ -9,7 +9,12 @@ using Photon.Pun;
 //[RequireComponent(typeof(PhotonView))]
 public class Timer : MonoBehaviour
 {
+
     [SerializeField] private TMP_Text uiText;
+    [SerializeField] private GameObject redButton
+    ;
+    [SerializeField] private GameObject blueButton;
+    private WorldBoardManager worldBoardManager;
 
     /// <summary>
     /// 준비 시간
@@ -52,24 +57,25 @@ public class Timer : MonoBehaviour
             //현재 시간을 준비시간만큼 설정
             remainedTime = prepareTime;
             //isTimerStart가 참이면 시작되었습니다! 거짓이면 끝났습니다!
+            uiText.text = "준비 시간이 " + (isTimerStart? "시작되었습니다!" : "끝났습니다!");
             Debug.Log($"준비 시간이 " + (isTimerStart? "시작되었습니다!" : "끝났습니다!"));
         }
     }
 
     private void Start()
     {
-        IsTimerStart = true;
+        worldBoardManager = WorldBoardManager.Instance;
     }
 
     private void Update()
     {
         if(IsTimerStart)
         {
-            //타이머 작동
+            // timer run
             remainedTime -= Time.deltaTime;
             uiText.text = $"{remainedTime / 60:00}:{remainedTime % 60:00}";
 
-            //준비 시간이 종료되었는지 검사
+            // Check if the ready time has expired
             if (TimesUp())
                 IsTimerStart = false;
         }
@@ -83,12 +89,14 @@ public class Timer : MonoBehaviour
     {
         if (remainedTime <= 0)
         {
+            uiText.text = "양 측 플레이어가 모두 준비를 마침";
             Debug.Log("제한 시간 종료!!!");
             return true;
         }
 
         else if(isHostReady && isMemberReady)
         {
+            uiText.text = "양 측 플레이어가 모두 준비를 마침";
             Debug.Log("양 측 플레이어가 모두 준비를 마침");
             return true;
         }
@@ -98,21 +106,44 @@ public class Timer : MonoBehaviour
 
     public void SetFirstPreparedPlayer(int playerNum)
     {
-        // 만약 아직 미정 -1 이면
-        if(firstPreparedPlayer != -1){
-            firstPreparedPlayer = playerNum;
+        // Check if the current stage is UnitSetting
+        if (WorldBoardManager.Instance.CurrentStage == WorldBoardManager.GameStage.UnitSetting)
+        {
+            // If still undecided -1
+            if (firstPreparedPlayer == -1)
+            {
+                firstPreparedPlayer = playerNum;
 
-            //만약 blue 먼저 하면
-            if(firstPreparedPlayer == 0){
-                WorldBoardManager.Instance.blueturn = true;
+                // If blue goes first
+                if (firstPreparedPlayer == 0)
+                {
+                    WorldBoardManager.Instance.blueturn = true;
+                }
+                else
+                {
+                    // Red goes first
+                    WorldBoardManager.Instance.redturn = true;
+                }
+
+                uiText.text = "The first order is " + firstPreparedPlayer;
             }
-            else{ // red 먼저 하면
-                WorldBoardManager.Instance.redturn = true;
+            else
+            {
+                // 2nd place order
+                Debug.Log("The first order has already been set.");
+                Destroy(redButton);
+                isHostReady = true;
+                Destroy(blueButton);
+                isMemberReady = true;
+                WorldBoardManager.Instance.NextStage();
+                
             }
-            Debug.Log("첫번째 순서는 " + firstPreparedPlayer);
         }
-        else{ // 2등 순서
-            Debug.Log("이미 첫번째 순서가 정해 졌습니다.");
+        else
+        {
+            // The code will not run if not in the UnitSetting stage
+            Debug.Log("SetFirstPreparedPlayer is not called in the UnitSetting stage.");
         }
     }
+    
 }

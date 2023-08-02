@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class WorldBoardManager : MonoBehaviour
@@ -15,16 +16,48 @@ public class WorldBoardManager : MonoBehaviour
 
     }
 
+    // 현재 유저 턴 상태
+    public enum Turn { None, Blue, Red}
+
+    public bool isTimerStart = false;
+    [SerializeField] private TMP_Text uiText;
+    /// <summary>
+    /// 준비 시간
+    /// </summary>
+    public float prepareTime = 120f;
+    /// <summary>
+    /// 현재 남아있는 시간
+    /// </summary>
+    public float remainedTime = 0f;
+
+    /// <summary>
+    /// 방장이 준비되었는지(내가 준비되었는지가 아니라 방장이 준비되었는지를 기준으로 함. 멀티플레이기 때문에 '나'를 주체로 하면 코드가 괜히 복잡해질 우려가 있음
+    /// </summary>
+    public bool isHostReady = false;
+    /// <summary>
+    /// 방원이 준비되었는지
+    /// </summary>
+    public bool isMemberReady = false;
+
+    /// <summary>
+    /// 누가 먼저 준비를 끝마쳤는가? 0 : 방장, 1 : 방원
+    /// </summary>
+    public int firstPreparedPlayer = -1;
+
+    /// <summary>
+    /// 타이머가 시작되었는지
+    /// </summary>
+    
 
     public Transform boardPlane;
 
     public float boardSize = 5f;
     public float worldSize = 100f;
 
-    public bool redturn;
-    public bool blueturn;
-
     private GameStage currentStage;
+    private GameStage currentTurn;
+
+    
 
     /// <summary>
     /*  
@@ -51,9 +84,10 @@ public class WorldBoardManager : MonoBehaviour
     */
 
     public static WorldBoardManager Instance {get; private set;}
+    private BeaconManager beaconManager;
     
 
-     void Awake()
+    void Awake()
     {
         if (null == Instance)
         {
@@ -75,6 +109,7 @@ public class WorldBoardManager : MonoBehaviour
 
         //처음 시작할때 단계를 설정한다.
         SetGameStage(GameStage.Standby);
+        remainedTime = prepareTime;
     }
 
     public void InitGame()
@@ -103,9 +138,53 @@ public class WorldBoardManager : MonoBehaviour
 
     }
 
+    private void Update() {
+        if(isTimerStart)
+        {
+            // timer run
+            remainedTime -= Time.deltaTime;
+            uiText.text = $"{remainedTime / 60:00}:{remainedTime % 60:00}";
+
+            // Check if the ready time has expired
+            if (TimesUp())
+                isTimerStart = false;
+        }
+    }
+
+     public bool TimesUp()
+    {
+        if (remainedTime <= 0)
+        {
+            Debug.Log("제한 시간 종료!!!");
+            return true;
+        }
+
+        else if(isHostReady && isMemberReady)
+        {
+            uiText.text = "Ready to play";
+            Debug.Log("양 측 플레이어가 모두 준비를 마침");
+            NextStage();
+            DisActiveAllBeacon();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void DisActiveAllBeacon()
+    {
+        // Get all beacons from BeaconManager
+        List<SpaceshipPresetBeacon> allBeacons = BeaconManager.Instance.GetAllBeacons();
+
+        // Set active to false for all beacons
+        foreach (var beacon in allBeacons)
+        {
+            beacon.gameObject.SetActive(false);
+        }
+    }
+
     private void initTurnValue(){
-        redturn = false;
-        blueturn = false;
+
     }
 
     
@@ -117,24 +196,24 @@ public class WorldBoardManager : MonoBehaviour
         switch (currentStage)
         {
             case GameStage.Standby:
-                // Actions for the standby stage
+                
                 break;
 
             case GameStage.UnitSetting:
-                // Actions for UnitSetting
+                
                 
                 break;
 
             case GameStage.GamePlaying:
-                // Actions for GamePlaying
+                
                 break;
 
             case GameStage.EndofGame:
-                // Actions for EndofGame
+                
                 break;
 
             case GameStage.Reseting:
-                // Actions for Reseting
+                
                 break;
         }
     }

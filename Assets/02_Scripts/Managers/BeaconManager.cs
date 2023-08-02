@@ -45,4 +45,9 @@ public class BeaconManager : MonoBehaviour
         }
         return isUnitValues;
     }
+
+    public List<SpaceshipPresetBeacon> GetAllBeacons()
+    {
+        return allBeacons;
+    }
 }

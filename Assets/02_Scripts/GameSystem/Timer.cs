@@ -104,46 +104,46 @@ public class Timer : MonoBehaviour
         return false;
     }
 
-    public void SetFirstPreparedPlayer(int playerNum)
-    {
-        // Check if the current stage is UnitSetting
-        if (WorldBoardManager.Instance.CurrentStage == WorldBoardManager.GameStage.UnitSetting)
-        {
-            // If still undecided -1
-            if (firstPreparedPlayer == -1)
-            {
-                firstPreparedPlayer = playerNum;
+    // public void SetFirstPreparedPlayer(int playerNum)
+    // {
+    //     // Check if the current stage is UnitSetting
+    //     if (WorldBoardManager.Instance.CurrentStage == WorldBoardManager.GameStage.UnitSetting)
+    //     {
+    //         // If still undecided -1
+    //         if (firstPreparedPlayer == -1)
+    //         {
+    //             firstPreparedPlayer = playerNum;
 
-                // If blue goes first
-                if (firstPreparedPlayer == 0)
-                {
-                    WorldBoardManager.Instance.blueturn = true;
-                }
-                else
-                {
-                    // Red goes first
-                    WorldBoardManager.Instance.redturn = true;
-                }
+    //             // If blue goes first
+    //             if (firstPreparedPlayer == 0)
+    //             {
+    //                 WorldBoardManager.Instance.blueturn = true;
+    //             }
+    //             else
+    //             {
+    //                 // Red goes first
+    //                 WorldBoardManager.Instance.redturn = true;
+    //             }
 
-                uiText.text = "The first order is " + firstPreparedPlayer;
-            }
-            else
-            {
-                // 2nd place order
-                Debug.Log("The first order has already been set.");
-                Destroy(redButton);
-                isHostReady = true;
-                Destroy(blueButton);
-                isMemberReady = true;
-                WorldBoardManager.Instance.NextStage();
+    //             uiText.text = "The first order is " + firstPreparedPlayer;
+    //         }
+    //         else
+    //         {
                 
-            }
-        }
-        else
-        {
-            // The code will not run if not in the UnitSetting stage
-            Debug.Log("SetFirstPreparedPlayer is not called in the UnitSetting stage.");
-        }
-    }
+    //             Debug.Log("The first order has already been set.");
+    //             Destroy(redButton);
+    //             isHostReady = true;
+    //             Destroy(blueButton);
+    //             isMemberReady = true;
+    //             WorldBoardManager.Instance.NextStage();
+                
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // The code will not run if not in the UnitSetting stage
+    //         Debug.Log("SetFirstPreparedPlayer is not called in the UnitSetting stage.");
+    //     }
+    // }
     
 }

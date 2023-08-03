@@ -16,7 +16,12 @@ public class SpaceUnit : MonoBehaviour
 
     private MoveAction moveAction;
 
+
     private BaseAction[] baseActionArray;
+
+    private Vector3 targetPosition = new Vector3(0f, 1f, 0f);
+
+    public DrawVirtualBottomLine drawVirtualBottomLine;
 
     public void Awake()
     {
@@ -27,4 +32,22 @@ public class SpaceUnit : MonoBehaviour
     {
 
     }
+
+    // private void Update() {
+    //     if(Input.GetKeyDown(KeyCode.U)){
+    //         MoveTest();
+    //     }
+    // }
+    public void Move(){
+        targetPosition = drawVirtualBottomLine.GetEndPoint();
+        moveAction.StartMoveActionFromPosition(targetPosition);
+        Debug.Log("이동한다~!!!@!@");
+    }
+
+    // void MoveTest(){
+    //     moveAction.StartMoveActionFromPosition(targetPosition);
+    //     Debug.Log("이동한다~!!!@!@");
+    // }
+    
+        
 }

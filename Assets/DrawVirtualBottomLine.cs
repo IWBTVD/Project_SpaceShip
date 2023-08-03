@@ -15,6 +15,10 @@ public class DrawVirtualBottomLine : MonoBehaviour
     GameObject BeaconObject;
     
     private bool isUnit;
+
+    public Vector3 GetEndPoint(){
+        return endPoint;
+    }
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -30,24 +34,23 @@ public class DrawVirtualBottomLine : MonoBehaviour
 
         // A 개체의 아래 방향으로 Raycast를 쏩니다.
         if (Physics.Raycast(this.transform.position, -Vector3.up, out hit, raycastDistance))
-        {
+        {   
+            startPoint = transform.position;
+
             // 충돌한 개체가 B 개체인지 확인합니다.
             if (hit.collider.gameObject == ground)
             {
                 // A 개체와 B 개체 사이에 다른 개체가 없다면 A 개체는 B 개체 위에 떠있는 것으로 간주합니다.
-                startPoint = transform.position;
                 endPoint = new Vector3(transform.position.x, ground.transform.position.y, transform.position.z);
-
-                lineRenderer.SetPosition(0, startPoint);
-                lineRenderer.SetPosition(1, endPoint);
-
             }
             else{
-                startPoint = transform.position;
 
-                lineRenderer.SetPosition(0, startPoint);
                 lineRenderer.SetPosition(1, startPoint);
+                endPoint = startPoint;
             }
+
+            lineRenderer.SetPosition(0, startPoint);
+            lineRenderer.SetPosition(1, endPoint);
         }
 
     }
@@ -63,11 +66,11 @@ public class DrawVirtualBottomLine : MonoBehaviour
     public void DeactivateLineObject()
     {
         Debug.Log("deactivate Line Object");
-        MoveOriginObject();
+        // MoveOriginObject();
         gameObject.SetActive(false);
     }
 
-    public void MoveOriginObject()
+    private void MoveOriginObject()
     {
         ActualVisual.transform.position = endPoint;
     }

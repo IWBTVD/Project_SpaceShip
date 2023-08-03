@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 7307701752418545538}
   - component: {fileID: 7307701752418545563}
   - component: {fileID: 7307701752418545537}
+  - component: {fileID: 9121063502059672448}
   m_Layer: 13
   m_Name: Colossal
   m_TagString: SpaceShip
@@ -975,6 +976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979418bdc24e32046a8c7d4460709a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawVirtualBottomLine: {fileID: 7307701751917772834}
 --- !u!114 &7307701752418545537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,6 +990,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   origin: {fileID: 7307701751929897683}
+--- !u!114 &9121063502059672448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7307701752418545561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b64a5b8dc918f4598e2e7d7185d762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMoveDistance: 5
 --- !u!1 &7307701752442473373
 GameObject:
   m_ObjectHideFlags: 0

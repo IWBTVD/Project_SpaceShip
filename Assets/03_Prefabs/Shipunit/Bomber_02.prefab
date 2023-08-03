@@ -1385,6 +1385,7 @@ GameObject:
   - component: {fileID: 7683456544095691783}
   - component: {fileID: 7683456544095691776}
   - component: {fileID: 4840208192249486061}
+  - component: {fileID: 6564388892516095623}
   m_Layer: 13
   m_Name: Bomber_02
   m_TagString: SpaceShip
@@ -1648,6 +1649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979418bdc24e32046a8c7d4460709a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawVirtualBottomLine: {fileID: 7683456544095691777}
 --- !u!114 &7683456544095691776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1683,6 +1685,19 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6564388892516095623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7581858811464902618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b64a5b8dc918f4598e2e7d7185d762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMoveDistance: 5
 --- !u!1 &7683456544095691778
 GameObject:
   m_ObjectHideFlags: 0

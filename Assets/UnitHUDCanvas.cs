@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class UnitHUDCanvas : MonoBehaviour
 {
-
+    bool isUIActived;
     public void ActiveUI()
-    {
-        Debug.Log("Activate Line Object");
-        gameObject.SetActive(true);
+    {   
+        if(!isUIActived){
+            Debug.Log("Activate Line Object");
+            gameObject.SetActive(true);
+            isUIActived = true;
+        }
     }
 
     public void DeactivateUI()
     {
-        Debug.Log("deactivate Line Object");
-        gameObject.SetActive(false);
+        if(isUIActived){
+            Debug.Log("deactivate Line Object");
+            gameObject.SetActive(false);
+            isUIActived = false;
+        }
     }
 }

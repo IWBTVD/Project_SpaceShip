@@ -63,6 +63,7 @@ public class DrawVirtualBottomLine : MonoBehaviour
     public void DeactivateLineObject()
     {
         Debug.Log("deactivate Line Object");
+        MoveOriginObject();
         gameObject.SetActive(false);
     }
 

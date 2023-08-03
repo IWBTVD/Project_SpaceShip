@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -17,14 +17,14 @@ public abstract class BaseAction : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
-    //¹öÆ°¿¡ µé¾î°¥ ±ÛÀÚ ¸®ÅÏ
+    //ë²„íŠ¼ì— ë“¤ì–´ê°ˆ ê¸€ì ë¦¬í„´
     public abstract string GetActionName();
 
-    //¾×¼Ç ¼öÇà ½Ã È£ÃâµÇ´Â ÇÔ¼ö
+    //ì•¡ì…˜ ìˆ˜í–‰ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
     public abstract void TakeAction(Vector3 worldPosition, Action onActionComplete);
 
     /// <summary>
-    /// ¾×¼ÇÀÌ À¯È¿ÇÑ À§Ä¡¿¡ ³õ¿´´ÂÁö
+    /// ì•¡ì…˜ì´ ìœ íš¨í•œ ìœ„ì¹˜ì— ë†“ì˜€ëŠ”ì§€
     /// </summary>
     /// <param name="worldPosition"></param>
     /// <returns></returns>

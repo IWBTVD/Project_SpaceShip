@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class SpaceShipPlaceToBeacon : MonoBehaviourPun , IPunObservable
+public class SpaceShipPlaceToBeacon : MonoBehaviourPun
 {
     Transform beaconTransform;
     Beacon spaceshipScript;
 
     public GameObject origin;
+
+    private WorldBoardManager worldBoardManager;
 
     private void OnTriggerEnter(Collider other) 
     {
@@ -36,7 +38,7 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun , IPunObservable
  
     public void MoveToCenter()
     {
-        if (spaceshipScript.isUnit == true)
+        if (spaceshipScript != null &&spaceshipScript.isUnit == true)
         {
             Debug.Log("Unit is assigned!");
             return;
@@ -70,18 +72,6 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun , IPunObservable
 
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(beaconTransform);
-        }
-
-        else
-        {
-           beaconTransform = (Transform)stream.ReceiveNext();
-        }
-    }
 }
 
   

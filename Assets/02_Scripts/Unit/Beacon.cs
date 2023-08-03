@@ -26,8 +26,9 @@ public class Beacon : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("SpaceShip") && !isUnit)
+        if (other.gameObject.CompareTag("SpaceShip"))
         {
+            isUnit = false;
             spaceshipDetectionVisual.SetActive(false);
         }
     }

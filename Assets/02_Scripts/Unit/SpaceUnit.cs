@@ -42,7 +42,7 @@ public class SpaceUnit : MonoBehaviour
     public void Move()
     {
         targetPosition = drawVirtualBottomLine.GetEndPoint();
-        moveAction.StartMoveActionFromPosition(targetPosition);
+        // moveAction.StartMoveActionFromPosition(targetPosition);
         Debug.Log("이동한다~!!!@!@");
 
         actionPoints = actionPoints -1;

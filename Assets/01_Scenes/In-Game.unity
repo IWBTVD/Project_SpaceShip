@@ -28181,6 +28181,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1706786609212599854, guid: 42d66f28e9068b74c840f867be4afa87,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706786609314410003, guid: 42d66f28e9068b74c840f867be4afa87,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706786609905832812, guid: 42d66f28e9068b74c840f867be4afa87,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2685720697735095006, guid: 42d66f28e9068b74c840f867be4afa87,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3205866424651312824, guid: 42d66f28e9068b74c840f867be4afa87,
         type: 3}
       propertyPath: sceneViewId
@@ -28210,6 +28230,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _whenUnselect.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5613250360980010817, guid: 42d66f28e9068b74c840f867be4afa87,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8433807028229534331, guid: 42d66f28e9068b74c840f867be4afa87,
         type: 3}

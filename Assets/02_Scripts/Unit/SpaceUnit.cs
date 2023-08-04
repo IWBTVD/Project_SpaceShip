@@ -45,18 +45,18 @@ public class SpaceUnit : MonoBehaviour
         moveAction.StartMoveActionFromPosition(targetPosition);
         Debug.Log("이동한다~!!!@!@");
 
-        actionPoints = actionPoints -1;
+        actionPoints -= 1;
 
-        RemoveActionQueue();
     }
 
     public void Attack()
     {
         
-        actionPoints = actionPoints -1;
+        actionPoints -= 1;
     }
     
 
+    // 리스트로 바꾸고 !isActive 막기
     public String GetActionNames()
     {
         if(actionPoints > 0)
@@ -81,4 +81,9 @@ public class SpaceUnit : MonoBehaviour
     private void RemoveActionQueue(){
         baseActionQueue.Dequeue();
     }
+
+
+    // 배열 무브 어택 
+    // 이동 공격
+
 }

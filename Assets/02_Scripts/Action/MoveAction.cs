@@ -5,7 +5,7 @@ using System;
 
 public class MoveAction : BaseAction
 {
-    public event EventHandler OnStartMoving;
+    public event EventHandler OnStartMoving; // 만약 애니메이션등 움직일동안 실행할 이벤트를 담을 변수
     public event EventHandler OnStopMoving;
 
     [SerializeField] private float maxMoveDistance = 5f;
@@ -13,6 +13,8 @@ public class MoveAction : BaseAction
     public Transform actualVisualTransform;
     
     private float moveDuration = 2f;
+
+    // 비행선 움직이는 중인지 아닌지
     private bool isMoving;
 
     //잡으면 이동 준비
@@ -22,17 +24,14 @@ public class MoveAction : BaseAction
     {
         // actualVisualTransform = transform.Find("ActualVisual")?.gameObject.transform;
     }
-    private void Update()
-    {
-        if (!isActive) return;
-    }
 
     public override string GetActionName()
     {
         return "Move";
     }
 
-    public override void TakeAction(Vector3 worldPosition, Action onActionComplete)
+    // 2
+    protected override void TakeAction(Vector3 worldPosition, Action onActionComplete)
     {
         ActionStart(onActionComplete);
         Debug.Log("TakeAction active");
@@ -52,25 +51,27 @@ public class MoveAction : BaseAction
         return 1;
     }
 
-    //worldPosition 값 받고 
+    //worldPosition 값 받고  1 유효성 체크후 TakeAction
     public void StartMoveActionFromPosition(Vector3 worldPosition)
     {
         if (IsValidActionPosition(worldPosition))
         {
             Debug.Log("StartMoveActionFromPosition active");
-            TakeAction(worldPosition, onActionComplete);
-            OnStartMoving?.Invoke(this, EventArgs.Empty);
-          
+            TakeAction(worldPosition, Kong);
+            OnStartMoving?.Invoke(this, EventArgs.Empty); // 1 용도 우주선이 이동 중임을 알림 
         }
     }
 
-    public IEnumerator  MoveTowardsDestination(Vector3 worldPosition)
+
+    // 실제로 이동하는 함수 3
+    private IEnumerator MoveTowardsDestination(Vector3 worldPosition)
     {
         isMoving = true;
 
         Vector3 startPosition = actualVisualTransform.position;
         float elapsedTime = 0f;
         Debug.Log("MoveTowardsDestination active");
+
         while (elapsedTime < moveDuration)
         {
             actualVisualTransform.position = Vector3.Lerp(startPosition, worldPosition, elapsedTime / moveDuration);
@@ -81,8 +82,13 @@ public class MoveAction : BaseAction
         actualVisualTransform.position = worldPosition;
         transform.position = actualVisualTransform.position;
         isMoving = false;
-        // ActionComplete();
+
+        ActionComplete();
     }
 
+    private void Kong()// 공
+    {
+    
+    }
     
 }

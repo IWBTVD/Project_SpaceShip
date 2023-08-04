@@ -5,7 +5,7 @@ using System;
 
 public abstract class BaseAction : MonoBehaviour
 {
-    public static event EventHandler OnAnyActionStarted;
+    public static event EventHandler OnAnyActionStarted; // 현재 active중인 말이 있다는지 알림
     public static event EventHandler OnAnyActionCompleted;
 
     protected Unit unit;
@@ -21,7 +21,7 @@ public abstract class BaseAction : MonoBehaviour
     public abstract string GetActionName();
 
     //액션 수행 시 호출되는 함수
-    public abstract void TakeAction(Vector3 worldPosition, Action onActionComplete);
+    protected abstract void TakeAction(Vector3 worldPosition, Action onActionComplete);
 
     /// <summary>
     /// 액션이 유효한 위치에 놓였는지

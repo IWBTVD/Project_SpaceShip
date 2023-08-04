@@ -13,18 +13,12 @@ public class AttackAction : BaseAction
     private bool isAttacking;
 
 
-
-    private void Update()
-    {
-        if (!isActive) return;
-    }
-
     public override string GetActionName()
     {
         return "Attack";
     }
 
-    public override void TakeAction(Vector3 worldPosition, Action onActionComplete)
+    protected override void TakeAction(Vector3 worldPosition, Action onActionComplete)
     {
         throw new NotImplementedException();
     }

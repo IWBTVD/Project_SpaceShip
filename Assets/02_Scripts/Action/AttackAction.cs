@@ -21,7 +21,7 @@ public class AttackAction : BaseAction
 
     public override string GetActionName()
     {
-        return "공격";
+        return "Attack";
     }
 
     public override void TakeAction(Vector3 worldPosition, Action onActionComplete)

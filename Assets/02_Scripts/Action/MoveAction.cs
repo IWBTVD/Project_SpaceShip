@@ -10,7 +10,7 @@ public class MoveAction : BaseAction
 
     [SerializeField] private float maxMoveDistance = 5f;
     private Vector3 destination;
-    private Transform actualVisualTransform;
+    public Transform actualVisualTransform;
     
     private float moveDuration = 2f;
     private bool isMoving;
@@ -18,8 +18,9 @@ public class MoveAction : BaseAction
     //잡으면 이동 준비
     //놓으면 이동
     
-    private void Start() {
-        actualVisualTransform = transform.Find("ActualVisual")?.gameObject.transform;
+    private void Start() 
+    {
+        // actualVisualTransform = transform.Find("ActualVisual")?.gameObject.transform;
     }
     private void Update()
     {
@@ -28,7 +29,7 @@ public class MoveAction : BaseAction
 
     public override string GetActionName()
     {
-        return "이동";
+        return "Move";
     }
 
     public override void TakeAction(Vector3 worldPosition, Action onActionComplete)
@@ -63,7 +64,8 @@ public class MoveAction : BaseAction
         }
     }
 
-    public IEnumerator  MoveTowardsDestination(Vector3 worldPosition){
+    public IEnumerator  MoveTowardsDestination(Vector3 worldPosition)
+    {
         isMoving = true;
 
         Vector3 startPosition = actualVisualTransform.position;
@@ -79,7 +81,7 @@ public class MoveAction : BaseAction
         actualVisualTransform.position = worldPosition;
         transform.position = actualVisualTransform.position;
         isMoving = false;
-        ActionComplete();
+        // ActionComplete();
     }
 
     

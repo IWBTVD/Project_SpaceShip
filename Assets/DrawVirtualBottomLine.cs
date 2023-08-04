@@ -44,8 +44,6 @@ public class DrawVirtualBottomLine : MonoBehaviour
                 endPoint = new Vector3(transform.position.x, ground.transform.position.y, transform.position.z);
             }
             else{
-
-                lineRenderer.SetPosition(1, startPoint);
                 endPoint = startPoint;
             }
 
@@ -68,11 +66,6 @@ public class DrawVirtualBottomLine : MonoBehaviour
         Debug.Log("deactivate Line Object");
         // MoveOriginObject();
         gameObject.SetActive(false);
-    }
-
-    private void MoveOriginObject()
-    {
-        ActualVisual.transform.position = endPoint;
     }
 
 

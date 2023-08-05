@@ -5,6 +5,7 @@ using System;
 
 public class SpaceUnit : MonoBehaviour
 {
+    private WorldBoardManager worldBoardManager;
     private const int ACTION_POINT_MAX = 2;
     //[Header("필수 할당요소")]
     //[SerializeField, Tooltip("우주선 비주얼")] private Transform spaceshipVisual;
@@ -16,6 +17,8 @@ public class SpaceUnit : MonoBehaviour
 
     private MoveAction moveAction;
     private AttackAction attackAction;
+
+    //list로 만들어야함
     private Queue<BaseAction> baseActionQueue = new Queue<BaseAction>();
 
     // private Oculus.Interaction.PointableUnityEventWrapper eventWrapper;
@@ -31,12 +34,15 @@ public class SpaceUnit : MonoBehaviour
     {
         moveAction = GetComponent<MoveAction>();
         attackAction = GetComponent<AttackAction>();
-        baseActionQueue.Enqueue(moveAction);
-        baseActionQueue.Enqueue(attackAction);
         // eventWrapper  = GetComponent<Oculus.Interaction.PointableUnityEventWrapper>();
         // eventWrapper.WhenUnselect.RemoveAllListeners();
 
         actionPoints = ACTION_POINT_MAX;
+    }
+
+    private void Start() 
+    {
+        worldBoardManager = WorldBoardManager.Instance;
     }
 
     public void Move()
@@ -55,35 +61,5 @@ public class SpaceUnit : MonoBehaviour
         actionPoints -= 1;
     }
     
-
-    // 리스트로 바꾸고 !isActive 막기
-    public String GetActionNames()
-    {
-        if(actionPoints > 0)
-        {
-            string ActionNames = "";
-
-            foreach (BaseAction actionMessage in baseActionQueue)
-            {
-                ActionNames += actionMessage.GetActionName() + " | ";
-            }
-
-            return ActionNames;
-        }
-        else
-        {
-            Debug.Log("Queue is empty!");
-
-            return "";
-        }
-    }
-
-    private void RemoveActionQueue(){
-        baseActionQueue.Dequeue();
-    }
-
-
-    // 배열 무브 어택 
-    // 이동 공격
 
 }

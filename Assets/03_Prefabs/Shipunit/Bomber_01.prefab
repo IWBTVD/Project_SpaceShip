@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveDistance: 5
+  actualVisualTransform: {fileID: 6140898411932835302}
 --- !u!114 &-8535741070690157500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,6 +1050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d40e54c28bcf404e8792a158265785a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionNames: {fileID: 0}
 --- !u!1 &5675365221790767279
 GameObject:
   m_ObjectHideFlags: 0

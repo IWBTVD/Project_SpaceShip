@@ -5,6 +5,7 @@ using System;
 
 public class AttackAction : BaseAction
 {
+    private WorldBoardManager worldBoardManager;
     public event EventHandler OnStartAttacking;
     public event EventHandler OnStopAttacking;
 
@@ -13,6 +14,9 @@ public class AttackAction : BaseAction
     private bool isAttacking;
 
 
+    private void Start() {
+        worldBoardManager = WorldBoardManager.Instance;
+    }
     public override string GetActionName()
     {
         return "Attack";
@@ -21,6 +25,11 @@ public class AttackAction : BaseAction
     protected override void TakeAction(Vector3 worldPosition, Action onActionComplete)
     {
         throw new NotImplementedException();
+    }
+
+
+    private void WhenTurnEnd(){
+        worldBoardManager.nextTurn();
     }
 
 }

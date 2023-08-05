@@ -81,14 +81,13 @@ public class MoveAction : BaseAction
 
         actualVisualTransform.position = worldPosition;
         transform.position = actualVisualTransform.position;
-        isMoving = false;
-
+        
         ActionComplete();
     }
 
     private void Kong()// 공
     {
-    
+        isMoving = false;
     }
     
 }

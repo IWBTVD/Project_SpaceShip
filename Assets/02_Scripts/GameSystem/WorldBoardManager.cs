@@ -336,6 +336,7 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
             stream.SendNext(isHostReady);
             stream.SendNext(isMemberReady);
             stream.SendNext(firstPreparedPlayer);
+            stream.SendNext(currentTurn);
         }
 
         else
@@ -343,6 +344,7 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
             isHostReady = (bool)stream.ReceiveNext();
             isMemberReady = (bool)stream.ReceiveNext();
             firstPreparedPlayer = (int)stream.ReceiveNext();
+            currentTurn = (Turn)stream.ReceiveNext();
         }
     }
 }

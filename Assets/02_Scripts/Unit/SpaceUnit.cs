@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using Oculus.Interaction;
 public class SpaceUnit : MonoBehaviour
 {
     private WorldBoardManager worldBoardManager;
@@ -21,21 +21,22 @@ public class SpaceUnit : MonoBehaviour
     //list로 만들어야함
     private Queue<BaseAction> baseActionQueue = new Queue<BaseAction>();
 
-    // private Oculus.Interaction.PointableUnityEventWrapper eventWrapper;
-
-
+    private Oculus.Interaction.PointableUnityEventWrapper eventWrapper;
+    private SpaceShipPlaceToBeacon spaceShipPlaceToBeacon;
+    private Grabbable grabbable;
     private Vector3 targetPosition;
     private GameObject targetObject;
+    private WorldBoardManager.GameStage currentStage;
+    private int actionPoints;
 
     public DrawVirtualBottomLine drawVirtualBottomLine;
 
-    private int actionPoints;
+    
     public void Awake()
     {
         moveAction = GetComponent<MoveAction>();
         attackAction = GetComponent<AttackAction>();
-        // eventWrapper  = GetComponent<Oculus.Interaction.PointableUnityEventWrapper>();
-        // eventWrapper.WhenUnselect.RemoveAllListeners();
+        
 
         actionPoints = ACTION_POINT_MAX;
     }
@@ -43,12 +44,29 @@ public class SpaceUnit : MonoBehaviour
     private void Start() 
     {
         worldBoardManager = WorldBoardManager.Instance;
+        worldBoardManager.OnCurrentStageChanged += OnCurrentStageChangedHandler;
+        eventWrapper  = GetComponent<Oculus.Interaction.PointableUnityEventWrapper>();
+        spaceShipPlaceToBeacon = GetComponent<SpaceShipPlaceToBeacon>();
+        grabbable = GetComponent<Grabbable>();
+        drawVirtualBottomLine = GetComponent<DrawVirtualBottomLine>();
+
+        Debug.Log(eventWrapper);
     }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe from the event to avoid memory leaks
+        if (worldBoardManager != null)
+        {
+            worldBoardManager.OnCurrentStageChanged -= OnCurrentStageChangedHandler;
+        }
+    }
+
 
     public void Move()
     {
         targetPosition = drawVirtualBottomLine.GetEndPoint();
-        moveAction.StartMoveActionFromPosition(targetPosition);
+        moveAction.StartMoveAction(targetPosition);
         Debug.Log("이동한다~!!!@!@");
 
         actionPoints -= 1;
@@ -57,9 +75,54 @@ public class SpaceUnit : MonoBehaviour
 
     public void Attack()
     {
-        
-        actionPoints -= 1;
+        if(targetObject != null){
+            if(OVRInput.GetDown(OVRInput.Button.One)){
+                attackAction.StartAttakAction(targetObject);
+                Debug.Log("공격한다!!");
+
+                actionPoints -= 1;
+            }
+        }
+        else{
+            Debug.Log("적 없음");
+        }
     }
-    
+
+    // 상태가 변할때마다 이벤트에 넣을거 추가
+    private void OnCurrentStageChangedHandler(WorldBoardManager.GameStage stage)
+    {
+        Debug.Log("Current stage changed: " + stage.ToString());
+        
+        switch (stage)
+        {
+            case WorldBoardManager.GameStage.Standby:
+
+                break;
+
+            case WorldBoardManager.GameStage.UnitSetting:
+                grabbable.isGrabbed = false;
+
+                eventWrapper.WhenUnselect.AddListener(spaceShipPlaceToBeacon.MoveToCenter);
+                break;
+
+            case WorldBoardManager.GameStage.GamePlaying:
+                eventWrapper.WhenUnselect.RemoveListener(spaceShipPlaceToBeacon.MoveToCenter);
+                
+                eventWrapper.WhenSelect.AddListener(drawVirtualBottomLine.ActivateLineObject);
+                eventWrapper.WhenUnselect.AddListener(drawVirtualBottomLine.DeactivateLineObject);
+                eventWrapper.WhenUnselect.AddListener(Move);
+
+                break;
+
+            case WorldBoardManager.GameStage.EndofGame:
+
+                break;
+
+            case WorldBoardManager.GameStage.Reseting:
+
+                break;
+        }
+
+    }
 
 }

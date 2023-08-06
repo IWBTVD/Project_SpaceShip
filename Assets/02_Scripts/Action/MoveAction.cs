@@ -52,7 +52,7 @@ public class MoveAction : BaseAction
     }
 
     //worldPosition 값 받고  1 유효성 체크후 TakeAction
-    public void StartMoveActionFromPosition(Vector3 worldPosition)
+    public void StartMoveAction(Vector3 worldPosition)
     {
         if (IsValidActionPosition(worldPosition))
         {

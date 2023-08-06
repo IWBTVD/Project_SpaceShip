@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -55,6 +56,8 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     public float worldSize = 100f;
 
     private GameStage currentStage;
+    public event Action<GameStage> OnCurrentStageChanged;
+
     private Turn currentTurn;
 
 
@@ -81,7 +84,6 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     */
 
     public static WorldBoardManager Instance { get; private set; }
-    private BeaconManager beaconManager;
 
 
     void Awake()
@@ -167,23 +169,14 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     }
 
     /// <summary>
-    /// GamePlaying stage에서 비콘 비활성화
-    /// </summary>
-    private void DisactiveAllBeacon()
-    {
-        // 모든 Becon 정보 받아오기
-        List<Beacon> allBeacons = BeaconManager.Instance.GetAllBeacons();
-
-        // 모든 비콘 비활성화
-        foreach (var beacon in allBeacons)
-        {
-            beacon.gameObject.SetActive(false);
-        }
-    }
-
-    /// <summary>
     /// 상태에 관한 부분
     /// </sumary>
+
+    private void TriggerCurrentStageChangedEvent()
+    {
+        OnCurrentStageChanged?.Invoke(currentStage);
+    }
+    
     public void SetGameStage(GameStage stage)
     {
         currentStage = stage;
@@ -202,7 +195,8 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
                 break;
 
             case GameStage.GamePlaying:
-                DisactiveAllBeacon();
+                //비콘들 전부 비활성화
+                BeaconManager.Instance.DisactiveAllBeacon();
                 break;
 
             case GameStage.EndofGame:
@@ -213,6 +207,8 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
 
                 break;
         }
+
+        // TriggerCurrentStageChangedEvent();
     }
 
     public void NextStage()
@@ -244,6 +240,8 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
                 Debug.Log("Current stage: Reseting -> Next stage: Standby");
                 break;
         }
+
+        TriggerCurrentStageChangedEvent();
     }
 
     public GameStage CurrentStage

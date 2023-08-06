@@ -34,7 +34,6 @@ public class UnitHUDCanvas : MonoBehaviour
     }
 
     private void SetActionText(){
-        string text = spaceUnit.GetActionNames();
-        actionNames.SetText(text);
+     
     }
 }

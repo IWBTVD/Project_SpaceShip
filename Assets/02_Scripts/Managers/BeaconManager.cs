@@ -46,6 +46,15 @@ public class BeaconManager : MonoBehaviour
         return isUnitValues;
     }
 
+    public void DisactiveAllBeacon()
+    {
+        // 모든 비콘 비활성화
+        foreach (var beacon in allBeacons)
+        {
+            beacon.gameObject.SetActive(false);
+        }
+    }
+
     public List<Beacon> GetAllBeacons()
     {
         return allBeacons;

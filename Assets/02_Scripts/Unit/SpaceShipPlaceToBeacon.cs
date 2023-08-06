@@ -10,8 +10,6 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
 
     public GameObject origin;
 
-    private WorldBoardManager worldBoardManager;
-
     private void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Beacon"))

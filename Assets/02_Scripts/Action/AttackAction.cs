@@ -28,6 +28,11 @@ public class AttackAction : BaseAction
     }
 
 
+    public void StartAttakAction(GameObject Enemy)
+    {
+
+    }
+
     private void WhenTurnEnd(){
         worldBoardManager.nextTurn();
     }

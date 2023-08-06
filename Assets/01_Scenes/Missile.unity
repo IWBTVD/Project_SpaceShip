@@ -313,6 +313,7 @@ GameObject:
   - component: {fileID: 659791823}
   - component: {fileID: 659791822}
   - component: {fileID: 659791821}
+  - component: {fileID: 659791825}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -399,6 +400,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &659791825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659791820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce58c81d07e3a546a381d3cf7eff76c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTimerStart: 0
+  uiText: {fileID: 0}
+  prepareTime: 120
+  remainedTime: 0
+  isHostReady: 0
+  isMemberReady: 0
+  firstPreparedPlayer: -1
+  boardPlane: {fileID: 659791824}
+  boardSize: 5
+  worldSize: 100
 --- !u!1 &867532681
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,3 +636,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1637073090}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1637073092 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1740094851042136, guid: 47943db42d2ef3a4894c863802dc72fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1637073090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1637073093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637073092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ace387a5fa77e148b18a27892f02f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

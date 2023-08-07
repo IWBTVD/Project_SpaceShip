@@ -10,6 +10,7 @@ TagManager:
   - SamplesInfoPanel
   - SpaceShip
   - Beacon
+  - TargetLock
   layers:
   - Default
   - TransparentFX

@@ -5,11 +5,11 @@ using UnityEngine;
 public class Missile0_02 : MonoBehaviour
 {
     Rigidbody m_rigid = null;
-    Transform m_tfTarget = null;
+    // Transform m_tfTarget = null;
 
     [SerializeField] float m_speed = 0f;
     float m_currentSpeed = 0f;
-    [SerializeField] LayerMask m_layerMask = 0;
+    public Transform m_tfTarget;
     [SerializeField] ParticleSystem m_psEffect = null;
 
     IEnumerator LaunchDelay()
@@ -17,21 +17,8 @@ public class Missile0_02 : MonoBehaviour
         yield return new WaitUntil(() => m_rigid.velocity.y < 0f);
         yield return new WaitForSeconds(0.1f);
 
-        SearchEnemy();
         m_psEffect.Play();
 
-        yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
-    }
-
-    void SearchEnemy()
-    {
-        Collider[] t_cols = Physics.OverlapSphere(transform.position, 100f, m_layerMask);
-
-        if (t_cols.Length > 0)
-        {
-            m_tfTarget = t_cols[Random.Range(0, t_cols.Length)].transform;
-        }
     }
 
     void Start()
@@ -55,9 +42,8 @@ public class Missile0_02 : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other) {
+    private void OnTriggerEnter(Collider other) {
         if(other.transform.CompareTag("Enemy")){
-            Destroy(other.gameObject);
             Destroy(gameObject);
         }
     }

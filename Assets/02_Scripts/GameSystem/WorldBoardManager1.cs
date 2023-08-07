@@ -111,7 +111,6 @@ public class WorldBoardManager1 : MonoBehaviour
                 break;
         }
 
-        TriggerCurrentStageChangedEvent();
     }
 
     public GameStage CurrentStage

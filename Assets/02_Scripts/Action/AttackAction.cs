@@ -26,6 +26,7 @@ public class AttackAction : BaseAction
 
     protected override void TakeAction(Vector3 worldPosition, Action onActionComplete)
     {
+        
         ActionStart(onActionComplete);
     }
 
@@ -46,6 +47,7 @@ public class AttackAction : BaseAction
 
     private void WhenTurnEnd(){
         worldBoardManager.nextTurn();
+        Debug.Log("턴 끝났습니다");
     }
 
 }

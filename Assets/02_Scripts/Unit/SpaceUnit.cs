@@ -6,7 +6,8 @@ using Oculus.Interaction;
 public class SpaceUnit : MonoBehaviour
 {
     private WorldBoardManager worldBoardManager;
-    private const int ACTION_POINT_MAX = 1;
+    private TargetManager targetManager;
+    private const int ACTION_POINT_MAX = 2;
     //[Header("필수 할당요소")]
     //[SerializeField, Tooltip("우주선 비주얼")] private Transform spaceshipVisual;
     //[SerializeField, Tooltip("ActualVisual에서 사용할 마테리얼")] private Material spaceshipMaterial;
@@ -33,8 +34,7 @@ public class SpaceUnit : MonoBehaviour
 
     private Transform firstTransform;
 
-    //임시
-    private  SetTarget setTarget;
+
     public void Awake()
     {
         moveAction = GetComponent<MoveAction>();
@@ -47,7 +47,12 @@ public class SpaceUnit : MonoBehaviour
     {
         worldBoardManager = WorldBoardManager.Instance;
         worldBoardManager.OnCurrentStageChanged += OnCurrentStageChangedHandler;
+        
+        targetManager = TargetManager.Instance;
+        targetManager.OnAttackEvent += OnTargetSelected;
+        
         eventWrapper  = GetComponent<Oculus.Interaction.PointableUnityEventWrapper>();
+        
         interactableUnityEventWrapper = GetComponent<InteractableUnityEventWrapper>();
         
         spaceShipPlaceToBeacon = GetComponent<SpaceShipPlaceToBeacon>();
@@ -65,6 +70,12 @@ public class SpaceUnit : MonoBehaviour
             worldBoardManager.OnCurrentStageChanged -= OnCurrentStageChangedHandler;
         }
 
+        if(targetManager != null)
+        {
+            targetManager.OnAttackEvent -= OnTargetSelected;
+        }
+        
+
     }
 
     private void Move()
@@ -74,7 +85,7 @@ public class SpaceUnit : MonoBehaviour
             targetPosition = drawVirtualBottomLine.GetEndPoint();
             moveAction.StartMoveAction(targetPosition);
             Debug.Log("이동한다!!");
-
+            
             actionPoints -= 1;
         }else{
             return;
@@ -140,13 +151,6 @@ public class SpaceUnit : MonoBehaviour
                 eventWrapper.WhenUnselect.AddListener(drawVirtualBottomLine.DeactivateLineObject);
                 eventWrapper.WhenUnselect.AddListener(Move);
 
-                GameObject targetObject = GameObject.FindGameObjectWithTag("TargetLock");
-                setTarget = targetObject.GetComponent<SetTarget>();
-
-                if(setTarget != null){
-                    // Subscribe to the event using the appropriate method
-                    setTarget.OnAttackEvent.AddListener(OnTargetSelected);
-                }
                 break;
 
             case WorldBoardManager.GameStage.EndofGame:

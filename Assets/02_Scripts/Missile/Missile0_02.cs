@@ -11,7 +11,7 @@ public class Missile0_02 : MonoBehaviour
     float m_currentSpeed = 0f;
     public Transform m_tfTarget;
     [SerializeField] ParticleSystem m_psEffect = null;
-
+    [SerializeField] LayerMask m_layerMask = 0;
     IEnumerator LaunchDelay()
     {
         yield return new WaitUntil(() => m_rigid.velocity.y < 0f);
@@ -19,6 +19,18 @@ public class Missile0_02 : MonoBehaviour
 
         m_psEffect.Play();
 
+        yield return new WaitForSeconds(7f);
+        Destroy(gameObject);
+    }
+
+    void SearchEnemy()
+    {
+        Collider[] t_cols = Physics.OverlapSphere(transform.position, 100f, m_layerMask);
+
+        if (t_cols.Length > 0)
+        {
+            m_tfTarget = t_cols[Random.Range(0, t_cols.Length)].transform;
+        }
     }
 
     void Start()
@@ -28,7 +40,7 @@ public class Missile0_02 : MonoBehaviour
         StartCoroutine(LaunchDelay());
     }
 
-    void Update()
+     void Update()
     {
         if (m_tfTarget != null)
         {
@@ -38,7 +50,8 @@ public class Missile0_02 : MonoBehaviour
             transform.position += transform.forward * m_currentSpeed * Time.deltaTime;
 
             Vector3 t_dir = (m_tfTarget.position - transform.position).normalized;
-            transform.forward = Vector3.Lerp(transform.forward, t_dir, 0.25f);
+            transform.forward = Vector3.Lerp(transform.forward, t_dir, 0.5f); // Increase the second parameter for faster rotation
+
         }
     }
 

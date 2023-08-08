@@ -5,14 +5,14 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     
-    private TargetManager TargetManager;
+    private SpaceShipManager spaceShipManager;
 
     private void Start() {
-        TargetManager = TargetManager.Instance;
+        spaceShipManager = SpaceShipManager.Instance;
     }
 
     public void setTarget(){
-        TargetManager.RegisterTarget(this.transform);
+        spaceShipManager.RegisterTarget(this.transform);
         
     }
 

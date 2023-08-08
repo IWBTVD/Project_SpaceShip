@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using System.Collections.Generic;
 
-public class TargetManager : MonoBehaviour
+public class SpaceShipManager : MonoBehaviour
 {
 
 
     public Action<Transform> OnAttackEvent;
-    private static TargetManager instance;
-    public static TargetManager Instance
+
+    private List<GameObject> allShips = new List<GameObject>();
+    private static SpaceShipManager instance;
+    public static SpaceShipManager Instance
     {
         get { return instance; }
     }
@@ -27,6 +30,11 @@ public class TargetManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void RegisterShip(GameObject spaceShip)
+    {
+        allShips.Add(spaceShip);
     }
 
     public void RegisterTarget(Transform target)

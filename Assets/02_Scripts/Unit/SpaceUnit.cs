@@ -6,7 +6,7 @@ using Oculus.Interaction;
 public class SpaceUnit : MonoBehaviour
 {
     private WorldBoardManager worldBoardManager;
-    private TargetManager targetManager;
+    private SpaceShipManager spaceShipManager;
     private const int ACTION_POINT_MAX = 2;
     //[Header("필수 할당요소")]
     //[SerializeField, Tooltip("우주선 비주얼")] private Transform spaceshipVisual;
@@ -34,12 +34,12 @@ public class SpaceUnit : MonoBehaviour
 
     private Transform firstTransform;
 
-
+    private Collider myColider;
     public void Awake()
     {
         moveAction = GetComponent<MoveAction>();
         attackAction = GetComponent<AttackAction>();
-        
+        myColider = GetComponent<Collider>();
         actionPoints = ACTION_POINT_MAX;
     }
 
@@ -48,8 +48,9 @@ public class SpaceUnit : MonoBehaviour
         worldBoardManager = WorldBoardManager.Instance;
         worldBoardManager.OnCurrentStageChanged += OnCurrentStageChangedHandler;
         
-        targetManager = TargetManager.Instance;
-        targetManager.OnAttackEvent += OnTargetSelected;
+        spaceShipManager = SpaceShipManager.Instance;
+        spaceShipManager.OnAttackEvent += OnTargetSelected;
+        spaceShipManager.RegisterShip(gameObject);
         
         eventWrapper  = GetComponent<Oculus.Interaction.PointableUnityEventWrapper>();
         
@@ -70,9 +71,9 @@ public class SpaceUnit : MonoBehaviour
             worldBoardManager.OnCurrentStageChanged -= OnCurrentStageChangedHandler;
         }
 
-        if(targetManager != null)
+        if(spaceShipManager != null)
         {
-            targetManager.OnAttackEvent -= OnTargetSelected;
+            spaceShipManager.OnAttackEvent -= OnTargetSelected;
         }
         
 
@@ -135,12 +136,15 @@ public class SpaceUnit : MonoBehaviour
         {
             case WorldBoardManager.GameStage.Standby:
                 eventWrapper.WhenUnselect.AddListener(RevertToDefaultPosition);
+                myColider.enabled = false;
                 break;
 
             case WorldBoardManager.GameStage.UnitSetting:
+                myColider.enabled = true;
                 eventWrapper.WhenUnselect.RemoveAllListeners();
                 //비콘에 배치 하는 함수 추가
                 eventWrapper.WhenUnselect.AddListener(spaceShipPlaceToBeacon.MoveToCenter);
+                
                 break;
 
             case WorldBoardManager.GameStage.GamePlaying:
@@ -150,6 +154,7 @@ public class SpaceUnit : MonoBehaviour
                 eventWrapper.WhenSelect.AddListener(drawVirtualBottomLine.ActivateLineObject);
                 eventWrapper.WhenUnselect.AddListener(drawVirtualBottomLine.DeactivateLineObject);
                 eventWrapper.WhenUnselect.AddListener(Move);
+                interactableUnityEventWrapper.enabled = true;
 
                 break;
 
@@ -164,11 +169,4 @@ public class SpaceUnit : MonoBehaviour
 
     }
 
-
-
-    // private void Update() {
-    //     if(Input.GetKeyDown(KeyCode.K)){
-    //         OnTargetSelected(target);
-    //     }
-    // }
 }

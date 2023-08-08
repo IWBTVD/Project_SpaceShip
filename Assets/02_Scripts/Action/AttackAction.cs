@@ -26,8 +26,8 @@ public class AttackAction : BaseAction
 
     protected override void TakeAction(Vector3 worldPosition, Action onActionComplete)
     {
-        
         ActionStart(onActionComplete);
+        ActionComplete();
     }
 
     // 적절한지 판단 여기에 구에 닿는지 닿으면 false 안닿으면 true를 반환하게 짜기

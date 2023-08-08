@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class SpaceShipPlaceToBeacon : MonoBehaviourPun
+public class SpaceShipPlaceToBeacon : MonoBehaviourPun, IPunObservable
 {
     Transform beaconTransform;
     Beacon spaceshipScript;
 
     public GameObject origin;
 
+    private Vector3 moveToCenterPosition;
     private void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Beacon"))
@@ -44,6 +45,7 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
 
         if (beaconTransform != null)
         {
+            moveToCenterPosition = beaconTransform.transform.position;
             // 우주선을 이동하고 isUnit 플래그를 모든 클라이언트에 설정하기 위해 RPC 호출
             photonView.RPC(nameof(MoveToCenterRPC), RpcTarget.All);
         }
@@ -60,8 +62,8 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
     {
 
         // 위치 이동
-        transform.position = beaconTransform.transform.position;
-        origin.transform.position = beaconTransform.transform.position;
+        transform.position = moveToCenterPosition;
+        origin.transform.position = moveToCenterPosition;
         // 방향 이동
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         origin.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
@@ -70,6 +72,20 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
 
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(moveToCenterPosition);
+            
+        }
+
+        else
+        {
+            moveToCenterPosition = (Vector3)stream.ReceiveNext();
+
+        }
+    }
 }
 
   

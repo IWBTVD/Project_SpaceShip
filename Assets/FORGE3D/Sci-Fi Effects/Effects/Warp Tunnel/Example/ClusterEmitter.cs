@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FORGE3D;
 using UnityEngine;
-using UnityEngine.WSA;
+using UnityEngine.XR.WSA;
 
 public class ClusterEmitter : MonoBehaviour
 {

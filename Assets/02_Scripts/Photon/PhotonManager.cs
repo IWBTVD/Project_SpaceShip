@@ -8,7 +8,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public static PhotonManager Instance { get; private set; }
 
-
+    [SerializeField] private Transform[] enemySpawnPoints;
     /// <summary>
     /// 나
     /// </summary>
@@ -57,10 +57,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         //접속한 플레이어가 내가 조종하는 플레이어가 아니면(당연하겠지만)
         //적 플레이어로 등록
-        if (!newPlayer.IsLocal)
+        if (!newPlayer.IsLocal){
             enemyPlayer = newPlayer;
             SpawnPlayer();
             
+            Transform randomSpawnPoint = enemySpawnPoints[Random.Range(0, enemySpawnPoints.Length)];
+            Vector3 spawnPosition = randomSpawnPoint.position;
+            PhotonNetwork.Instantiate("EnemyPrefab", spawnPosition, Quaternion.identity);
+        }
     }
 
     public void SpawnPlayer()

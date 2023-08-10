@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8800470641073454428}
   - component: {fileID: 9085299420463885573}
   m_Layer: 14
-  m_Name: SpaceShipInteractionRigOVR
+  m_Name: InteractionRigOVR-FullSynthetic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

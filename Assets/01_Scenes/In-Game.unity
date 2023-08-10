@@ -24260,7 +24260,7 @@ PrefabInstance:
     - target: {fileID: 1204777398567681136, guid: 3a18c7faea866ed4a80975417694c134,
         type: 3}
       propertyPath: m_Name
-      value: SpaceShipInteractionRigOVR
+      value: InteractionRigOVR-FullSynthetic
       objectReference: {fileID: 0}
     - target: {fileID: 1204777398567681137, guid: 3a18c7faea866ed4a80975417694c134,
         type: 3}

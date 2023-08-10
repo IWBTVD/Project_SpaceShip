@@ -19,7 +19,10 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun, IPunObservable
             
             // 비콘과 닿을때 비콘 정보와 스크립트를 읽어오기
             beaconTransform = other.transform;
+            photonView.RPC(nameof(ReceiveTransformData), RpcTarget.All, beaconTransform.position);
             spaceshipScript = beaconTransform.GetComponent<Beacon>();
+
+            MoveToCenterRPC();
         }
     }
 
@@ -28,9 +31,8 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun, IPunObservable
         {
             Debug.Log("Beacon Exit detected: 1");
             
-            // 비콘과 빠질때 비콘 정보와 스크립트를 읽어오기
-            beaconTransform = null;
-            spaceshipScript = null;
+            // 비콘과 빠질때 비콘 정보와 스크립트를 초기화
+            photonView.RPC(nameof(ClearBeaconData), RpcTarget.All);
         }
     }
 
@@ -62,8 +64,8 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun, IPunObservable
     {
 
         // 위치 이동
-        transform.position = moveToCenterPosition;
-        origin.transform.position = moveToCenterPosition;
+        transform.position = beaconTransform.position;
+        origin.transform.position = beaconTransform.position;
         // 방향 이동
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         origin.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
@@ -72,18 +74,33 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun, IPunObservable
 
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    [PunRPC]
+    private void ReceiveTransformData(Vector3 position)
+    {
+        if (beaconTransform != null)
+        {
+            beaconTransform.position = position;
+        }
+    }
+
+    [PunRPC]
+    private void ClearBeaconData()
+    {
+        // 값 리셋
+        beaconTransform = null;
+        spaceshipScript = null;
+
+    }
+
+     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(moveToCenterPosition);
             
         }
-
         else
         {
-            moveToCenterPosition = (Vector3)stream.ReceiveNext();
-
+           
         }
     }
 }

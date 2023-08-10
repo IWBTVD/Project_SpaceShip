@@ -12,6 +12,9 @@ public class Missile0_02 : MonoBehaviour
     public Transform m_tfTarget;
     [SerializeField] ParticleSystem m_psEffect = null;
     [SerializeField] LayerMask m_layerMask = 0;
+    
+    //미사일의 데미지 우주선마다 다름
+    private int damage;
     IEnumerator LaunchDelay()
     {
         yield return new WaitUntil(() => m_rigid.velocity.y < 0f);
@@ -21,16 +24,6 @@ public class Missile0_02 : MonoBehaviour
 
         yield return new WaitForSeconds(7f);
         Destroy(gameObject);
-    }
-
-    void SearchEnemy()
-    {
-        Collider[] t_cols = Physics.OverlapSphere(transform.position, 100f, m_layerMask);
-
-        if (t_cols.Length > 0)
-        {
-            m_tfTarget = t_cols[Random.Range(0, t_cols.Length)].transform;
-        }
     }
 
     void Start()
@@ -60,4 +53,17 @@ public class Missile0_02 : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
+
+    // 삭제 예정
+    // void SearchEnemy()
+    // {
+    //     Collider[] t_cols = Physics.OverlapSphere(transform.position, 100f, m_layerMask);
+
+    //     if (t_cols.Length > 0)
+    //     {
+    //         m_tfTarget = t_cols[Random.Range(0, t_cols.Length)].transform;
+    //     }
+    // }
 }

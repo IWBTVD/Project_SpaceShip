@@ -85,7 +85,8 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
 
     public static WorldBoardManager Instance { get; private set; }
 
-
+    public PhotonView pv;
+    
     void Awake()
     {
         if (null == Instance)

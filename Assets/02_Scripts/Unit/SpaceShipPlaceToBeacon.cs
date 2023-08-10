@@ -10,6 +10,7 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun, IPunObservable
 
     public GameObject origin;
 
+
     private Vector3 moveToCenterPosition;
     private void OnTriggerEnter(Collider other) 
     {

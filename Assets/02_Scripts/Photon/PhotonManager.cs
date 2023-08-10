@@ -19,6 +19,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public Player enemyPlayer { get; private set; }
 
 
+    private GameObject spawnedPlayerPrefab;
+
     private void Awake()
     {
         Instance = this;
@@ -45,6 +47,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("On Joined Room");
         myPlayer = PhotonNetwork.LocalPlayer;
+        
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -56,5 +59,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //적 플레이어로 등록
         if (!newPlayer.IsLocal)
             enemyPlayer = newPlayer;
+            SpawnPlayer();
+            
+    }
+
+    public void SpawnPlayer()
+    {
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("SpaceShipInteractionRigOVR", transform.position, transform.rotation);
     }
 }

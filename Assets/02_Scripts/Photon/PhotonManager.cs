@@ -54,17 +54,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
         Debug.Log("New player has entered this room");
+        SpawnPlayer();
 
-        //접속한 플레이어가 내가 조종하는 플레이어가 아니면(당연하겠지만)
-        //적 플레이어로 등록
-        if (!newPlayer.IsLocal){
-            enemyPlayer = newPlayer;
-            SpawnPlayer();
-        }
     }
 
     public void SpawnPlayer()
     {
-        spawnedPlayerPrefab = PhotonNetwork.Instantiate("SpaceShipInteractionRigOVR", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("InteractionRigOVR-FullSynthetic", transform.position, transform.rotation);
     }
 }

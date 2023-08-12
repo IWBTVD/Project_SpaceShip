@@ -47,7 +47,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("On Joined Room");
         myPlayer = PhotonNetwork.LocalPlayer;
-        SpawnPlayer();
         
     }
 
@@ -55,6 +54,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
         Debug.Log("New player has entered this room");
+        SpawnPlayer();
 
     }
 

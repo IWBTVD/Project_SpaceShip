@@ -60,10 +60,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if (!newPlayer.IsLocal){
             enemyPlayer = newPlayer;
             SpawnPlayer();
-            
-            Transform randomSpawnPoint = enemySpawnPoints[Random.Range(0, enemySpawnPoints.Length)];
-            Vector3 spawnPosition = randomSpawnPoint.position;
-            PhotonNetwork.Instantiate("EnemyPrefab", spawnPosition, Quaternion.identity);
         }
     }
 

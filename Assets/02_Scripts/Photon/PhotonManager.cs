@@ -8,6 +8,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public static PhotonManager Instance { get; private set; }
 
+    private string gameVersion = "1";
     public PlayerSpawner playerSpawner;
     /// <summary>
     /// 나
@@ -28,32 +29,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        // 접속에 필요한 정보(게임 버전) 설정
+        PhotonNetwork.GameVersion = gameVersion;
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("On Connected To Master");
-        PhotonNetwork.JoinRandomOrCreateRoom();
+        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 2 }, null);
     }
-
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("On Joined Lobby");
-
-    }
-
     public override void OnJoinedRoom()
     {
-        Debug.Log("On Joined Room");
-        myPlayer = PhotonNetwork.LocalPlayer;
         playerSpawner.SpawnPlayer();
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        base.OnPlayerEnteredRoom(newPlayer);
-        Debug.Log("New player has entered this room");
-
-    }
 }

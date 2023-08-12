@@ -8,7 +8,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public static PhotonManager Instance { get; private set; }
 
-    public PlayerSpawner playerSpawner;
+    [SerializeField] private Transform[] enemySpawnPoints;
     /// <summary>
     /// 나
     /// </summary>
@@ -47,7 +47,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("On Joined Room");
         myPlayer = PhotonNetwork.LocalPlayer;
-        playerSpawner.SpawnPlayer();
+        SpawnPlayer();
+        
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -55,5 +56,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
         Debug.Log("New player has entered this room");
 
+    }
+
+    public void SpawnPlayer()
+    {
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("InteractionRigOVR-FullSynthetic", transform.position, transform.rotation);
     }
 }

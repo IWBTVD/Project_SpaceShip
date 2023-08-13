@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
-
-public class SpaceShipManager : MonoBehaviour
+using Photon.Pun;
+public class SpaceShipManager : MonoBehaviour, IPunObservable
 {
 
 
@@ -45,6 +45,20 @@ public class SpaceShipManager : MonoBehaviour
 
     public Transform GetTarget(){
         return target;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //내가 써야되는 것들(내컴퓨터에서 내것)
+        if(stream.IsWriting)
+        {
+            stream.SendNext(target);
+        }
+        //내가 받아야되는 것들(내컴퓨터에서 다른 플레이어 것)
+        if(stream.IsReading)
+        {
+            target = (Transform)stream.ReceiveNext();
+        }
     }
 
 }

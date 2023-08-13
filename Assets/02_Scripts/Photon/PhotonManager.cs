@@ -46,7 +46,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("On Joined Room");
-        myPlayer = PhotonNetwork.LocalPlayer;
+        SpawnPlayer();
         
     }
 
@@ -54,16 +54,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
         Debug.Log("New player has entered this room");
-        SpawnPlayer();
 
     }
 
     public void SpawnPlayer()
     {
         if(photonView.IsMine){
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("InteractionRigOVR-FullSynthetic", transform.position, transform.rotation);
+            spawnedPlayerPrefab = PhotonNetwork.Instantiate("BlueCrew", transform.position, transform.rotation);
         }else{
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("RedCrewCharacter", transform.position, transform.rotation);
+            spawnedPlayerPrefab = PhotonNetwork.Instantiate("RedCrew", transform.position, transform.rotation);
         }
     }
 }

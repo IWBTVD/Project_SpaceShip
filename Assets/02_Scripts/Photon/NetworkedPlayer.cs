@@ -19,6 +19,7 @@ public class NetworkedPlayer : MonoBehaviourPun, IPunObservable
 
     //내 몸
     public Transform[] myBody;
+
     //다른 사람 몸
     public Transform[] otherBody;
 

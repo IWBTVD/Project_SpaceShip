@@ -60,6 +60,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void SpawnPlayer()
     {
-        spawnedPlayerPrefab = PhotonNetwork.Instantiate("InteractionRigOVR-FullSynthetic", transform.position, transform.rotation);
+        if(photonView.IsMine){
+            spawnedPlayerPrefab = PhotonNetwork.Instantiate("InteractionRigOVR-FullSynthetic", transform.position, transform.rotation);
+        }else{
+            spawnedPlayerPrefab = PhotonNetwork.Instantiate("RedCrewCharacter", transform.position, transform.rotation);
+        }
     }
 }

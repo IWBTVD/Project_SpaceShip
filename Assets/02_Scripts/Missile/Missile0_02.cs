@@ -9,7 +9,7 @@ public class Missile0_02 : MonoBehaviour
 
     [SerializeField] float m_speed = 0f;
     float m_currentSpeed = 0f;
-    public Transform m_tfTarget;
+    public Vector3 targetPosition;
     [SerializeField] ParticleSystem m_psEffect = null;
     [SerializeField] LayerMask m_layerMask = 0;
     
@@ -35,35 +35,21 @@ public class Missile0_02 : MonoBehaviour
 
      void Update()
     {
-        if (m_tfTarget != null)
+        if (targetPosition != null)
         {
             if (m_currentSpeed <= m_speed) 
                 m_currentSpeed += m_speed * Time.deltaTime;
 
             transform.position += transform.forward * m_currentSpeed * Time.deltaTime;
 
-            Vector3 t_dir = (m_tfTarget.position - transform.position).normalized;
+            Vector3 t_dir = (targetPosition - transform.position).normalized;
             transform.forward = Vector3.Lerp(transform.forward, t_dir, 0.5f); // Increase the second parameter for faster rotation
 
         }
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.transform.CompareTag("Enemy")){
             Destroy(gameObject);
-        }
     }
 
-
-
-    // 삭제 예정
-    // void SearchEnemy()
-    // {
-    //     Collider[] t_cols = Physics.OverlapSphere(transform.position, 100f, m_layerMask);
-
-    //     if (t_cols.Length > 0)
-    //     {
-    //         m_tfTarget = t_cols[Random.Range(0, t_cols.Length)].transform;
-    //     }
-    // }
 }

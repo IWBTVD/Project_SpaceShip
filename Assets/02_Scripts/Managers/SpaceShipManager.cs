@@ -7,7 +7,7 @@ public class SpaceShipManager : MonoBehaviour, IPunObservable
 {
 
 
-    public Action<Transform> OnAttackEvent;
+    public Action<Vector3> OnAttackEvent;
 
     private List<GameObject> allShips = new List<GameObject>();
     private static SpaceShipManager instance;
@@ -17,7 +17,7 @@ public class SpaceShipManager : MonoBehaviour, IPunObservable
     }
 
     
-    private Transform target;
+    private Vector3 targetPosition;
 
     private void Awake()
     {
@@ -37,14 +37,14 @@ public class SpaceShipManager : MonoBehaviour, IPunObservable
         allShips.Add(spaceShip);
     }
 
-    public void RegisterTarget(Transform target)
+    public void RegisterTarget(Vector3 position)
     {
-        this.target = target;
-        OnAttackEvent.Invoke(target);
+        targetPosition = position;
+        OnAttackEvent.Invoke(targetPosition);
     }
 
-    public Transform GetTarget(){
-        return target;
+    public Vector3 GetTarget(){
+        return targetPosition;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -52,12 +52,12 @@ public class SpaceShipManager : MonoBehaviour, IPunObservable
         //내가 써야되는 것들(내컴퓨터에서 내것)
         if(stream.IsWriting)
         {
-            stream.SendNext(target);
+            stream.SendNext(targetPosition);
         }
         //내가 받아야되는 것들(내컴퓨터에서 다른 플레이어 것)
         if(stream.IsReading)
         {
-            target = (Transform)stream.ReceiveNext();
+            targetPosition = (Vector3)stream.ReceiveNext();
         }
     }
 

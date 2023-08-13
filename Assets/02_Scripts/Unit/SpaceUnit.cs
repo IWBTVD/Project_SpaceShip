@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Oculus.Interaction;
+using Photon.Pun;
 public class SpaceUnit : MonoBehaviour
 {
+    private const int ACTION_POINT_MAX = 2;
+
+
     private WorldBoardManager worldBoardManager;
     private SpaceShipManager spaceShipManager;
-    private const int ACTION_POINT_MAX = 2;
+    
     //[Header("필수 할당요소")]
     //[SerializeField, Tooltip("우주선 비주얼")] private Transform spaceshipVisual;
     //[SerializeField, Tooltip("ActualVisual에서 사용할 마테리얼")] private Material spaceshipMaterial;
@@ -25,8 +29,9 @@ public class SpaceUnit : MonoBehaviour
     private Oculus.Interaction.PointableUnityEventWrapper eventWrapper;
     private InteractableUnityEventWrapper interactableUnityEventWrapper;
     private SpaceShipPlaceToBeacon spaceShipPlaceToBeacon;
+    private Vector3 arrivalPoint;
     private Vector3 targetPosition;
-    private Transform target;
+    
     private WorldBoardManager.GameStage currentStage;
     private int actionPoints;
 
@@ -35,11 +40,15 @@ public class SpaceUnit : MonoBehaviour
     private Transform firstTransform;
 
     private Collider myColider;
+
+    private PhotonView pv;
     public void Awake()
     {
         moveAction = GetComponent<MoveAction>();
         attackAction = GetComponent<AttackAction>();
         myColider = GetComponent<Collider>();
+        pv = GetComponent<PhotonView>();
+
         actionPoints = ACTION_POINT_MAX;
     }
 
@@ -79,34 +88,56 @@ public class SpaceUnit : MonoBehaviour
 
     }
 
-    private void Move()
+    // private void Move()
+    // {
+    //     if(actionPoints == 2){
+    
+    //         targetPosition = drawVirtualBottomLine.GetEndPoint();
+    //         moveAction.StartMoveAction(targetPosition);
+    //         Debug.Log("이동한다!!");
+            
+    //         actionPoints -= 1;
+    //     }else{
+    //         return;
+    //     }
+    // }
+
+     private void Move()
     {
         if(actionPoints == 2){
     
-            targetPosition = drawVirtualBottomLine.GetEndPoint();
-            moveAction.StartMoveAction(targetPosition);
-            Debug.Log("이동한다!!");
-            
-            actionPoints -= 1;
+            pv.RPC(nameof(MovePRC), RpcTarget.All);
         }else{
             return;
         }
     }
 
-    private void OnTargetSelected(Transform target)
+    [PunRPC]
+    private void MovePRC()
     {
-        this.target = target;
+    
+        arrivalPoint = drawVirtualBottomLine.GetEndPoint();
+        moveAction.StartMoveAction(arrivalPoint);
+        Debug.Log("이동한다!!");
+        
+        actionPoints -= 1;
+
+    }
+
+    private void OnTargetSelected(Vector3 position)
+    {
+        // this.target = target;
+        targetPosition = position;
+
         Attack();
     }
     
-
     private void Attack()
     {
-        if(target != null && actionPoints == 1){
+        if(targetPosition != null && actionPoints == 1){
            
-            attackAction.StartAttakAction(target);
+            attackAction.StartAttakAction(targetPosition);
             Debug.Log("공격한다!!");
-            target.tag = "Enemy";
             actionPoints -= 1;
             
         }

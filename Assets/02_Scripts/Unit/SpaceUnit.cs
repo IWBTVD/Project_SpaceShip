@@ -133,7 +133,7 @@ public class SpaceUnit : MonoBehaviour
     
     private void Attack()
     {
-        if(targetPosition != null && actionPoints == 2){ // 1로 고쳐야함
+        if(targetPosition != null && actionPoints == 1){ // 1로 고쳐야함
            
             attackAction.StartAttakAction(targetPosition);
             Debug.Log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + targetPosition);

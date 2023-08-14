@@ -49,7 +49,10 @@ public class Missile0_02 : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
+        if(other.transform.CompareTag("Enemy")){
             Destroy(gameObject);
+            other.tag = "SpaceShip";
+        }
     }
 
 }

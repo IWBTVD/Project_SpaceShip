@@ -3483,8 +3483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68abb2453f90947a47b9dc19813cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawnPoints:
-  - {fileID: 0}
 --- !u!4 &580783601
 Transform:
   m_ObjectHideFlags: 0

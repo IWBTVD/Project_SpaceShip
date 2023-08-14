@@ -15,12 +15,14 @@ public class Beacon : MonoBehaviour
 
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("SpaceShip") && !isUnit)
         {
             Debug.Log("Collision with Bullet detected: 1");
             spaceshipDetectionVisual.SetActive(true);
+            
         }
     }
 

@@ -6,7 +6,7 @@ using Photon.Pun;
 public class SpaceShipPlaceToBeacon : MonoBehaviourPun
 {
     Transform beaconTransform;
-    Beacon spaceshipScript;
+    Beacon beacon;
 
     public GameObject origin;
 
@@ -20,7 +20,7 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
             
             // 비콘과 닿을때 비콘 정보와 스크립트를 읽어오기
             beaconTransform = other.transform;
-            spaceshipScript = beaconTransform.GetComponent<Beacon>();
+            beacon = beaconTransform.GetComponent<Beacon>();
             MoveToCenter();
         }
     }
@@ -33,14 +33,14 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
             // 비콘과 빠질때 비콘 정보와 스크립트를 초기화
             // 값 리셋
             beaconTransform = null;
-            spaceshipScript = null;
+            beacon = null;
         }
     }
 
  
     public void MoveToCenter()
     {
-        if (spaceshipScript != null &&spaceshipScript.isUnit == true)
+        if (beacon != null &&beacon.isUnit == true)
         {
             Debug.Log("Unit is assigned!");
             return;
@@ -54,7 +54,7 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             origin.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             
-            spaceshipScript.isUnit = true;
+            beacon.isUnit = true;
         }
         else
         {

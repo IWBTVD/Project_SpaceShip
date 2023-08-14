@@ -128,15 +128,15 @@ public class SpaceUnit : MonoBehaviour
     {
         // this.target = target;
         targetPosition = position;
-
         Attack();
     }
     
     private void Attack()
     {
-        if(targetPosition != null && actionPoints == 1){
+        if(targetPosition != null && actionPoints == 2){ // 1로 고쳐야함
            
             attackAction.StartAttakAction(targetPosition);
+            Debug.Log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + targetPosition);
             Debug.Log("공격한다!!");
             actionPoints -= 1;
             

@@ -45,11 +45,6 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     /// </summary>
     public int firstPreparedPlayer = -1;
 
-    /// <summary>
-    /// 타이머가 시작되었는지
-    /// </summary>
-
-
     public Transform boardPlane;
 
     public float boardSize = 5f;
@@ -59,6 +54,7 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     public event Action<GameStage> OnCurrentStageChanged;
 
     private Turn currentTurn;
+    public event Action<Turn> OnCurrentTurnChanged;
 
 
 
@@ -169,10 +165,8 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
         return false;
     }
 
-    /// <summary>
     /// 상태에 관한 부분
-    /// </sumary>
-
+    
     private void TriggerCurrentStageChangedEvent()
     {
         OnCurrentStageChanged?.Invoke(currentStage);
@@ -182,7 +176,6 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     {
         currentStage = stage;
 
-        // Perform any specific actions based on the stage
         switch (currentStage)
         {
             case GameStage.Standby:
@@ -251,9 +244,14 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     }
 
 
-    /// <summary>
+    
     /// 순서에 관한 부분
-    /// </sumary>
+   
+    private void TriggerCurrentTurnChangedEvent()
+    {
+        OnCurrentTurnChanged?.Invoke(currentTurn);
+    }
+
     public void SetOrder(int teamColor)
     {   
         // -1 이면 첫번째 누른 사람이니까 해당 번호를 할당
@@ -288,6 +286,8 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
                 currentTurn = Turn.Red; 
                 break;
         }
+
+        TriggerCurrentTurnChangedEvent();
     }
 
     public Turn CurrentTurn

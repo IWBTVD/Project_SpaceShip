@@ -7,8 +7,7 @@ using Photon.Realtime;
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public static PhotonManager Instance { get; private set; }
-
-    [SerializeField] private Transform[] enemySpawnPoints;
+    
     /// <summary>
     /// 나
     /// </summary>
@@ -60,9 +59,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void SpawnPlayer()
     {
         if(photonView.IsMine){
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("BlueCrew", transform.position, transform.rotation);
-        }else{
             spawnedPlayerPrefab = PhotonNetwork.Instantiate("RedCrew", transform.position, transform.rotation);
+            
+        }else{
+            spawnedPlayerPrefab = PhotonNetwork.Instantiate("BlueCrew", transform.position, transform.rotation);
+        
         }
     }
 }

@@ -20786,7 +20786,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3317683932827561244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.292, z: 0}
+  m_LocalPosition: {x: 0, y: -2.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23615,6 +23615,7 @@ MonoBehaviour:
   ovrCameraRig: {fileID: 7084424904993514378}
   ovrPlayerController: {fileID: 2743552080370695817}
   ovrSceneSampleController: {fileID: 6643516982147187683}
+  ovrGrabber: {fileID: 0}
   myBody:
   - {fileID: 7084424904993816492}
   - {fileID: 325085556203623855}

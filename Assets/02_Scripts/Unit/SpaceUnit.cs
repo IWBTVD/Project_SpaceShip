@@ -4,7 +4,14 @@ using UnityEngine;
 using System;
 using Oculus.Interaction;
 using Photon.Pun;
-public class SpaceUnit : MonoBehaviour
+
+public enum Team { 
+    None,
+    Red,
+    Blue,
+}
+
+public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
 {
     private const int ACTION_POINT_MAX = 2;
 
@@ -42,6 +49,9 @@ public class SpaceUnit : MonoBehaviour
     private Collider myColider;
 
     private PhotonView pv;
+
+    public int myShipIndex = 0;
+
     public void Awake()
     {
         moveAction = GetComponent<MoveAction>();
@@ -58,8 +68,7 @@ public class SpaceUnit : MonoBehaviour
         worldBoardManager.OnCurrentStageChanged += OnCurrentStageChangedHandler;
         
         spaceShipManager = SpaceShipManager.Instance;
-        spaceShipManager.OnAttackEvent += OnTargetSelected;
-        spaceShipManager.RegisterShip(gameObject);
+        //spaceShipManager.RegisterShip(gameObject);
         
         eventWrapper  = GetComponent<Oculus.Interaction.PointableUnityEventWrapper>();
         
@@ -82,7 +91,7 @@ public class SpaceUnit : MonoBehaviour
 
         if(spaceShipManager != null)
         {
-            spaceShipManager.OnAttackEvent -= OnTargetSelected;
+
         }
         
 
@@ -124,14 +133,15 @@ public class SpaceUnit : MonoBehaviour
 
     }
 
-    private void OnTargetSelected(Vector3 position)
+    public void OnTargetSelected()
     {
         // this.target = target;
-        targetPosition = position;
-        Attack();
+        //targetPosition = position;
+        //Attack();
+        //pv.RPC(nameof(AttackInvoked), RpcTarget.All, );
     }
     
-    private void Attack()
+    public void Attack()
     {
         if(targetPosition != null && actionPoints == 1){ // 1로 고쳐야함
            
@@ -200,4 +210,39 @@ public class SpaceUnit : MonoBehaviour
 
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(myShipIndex);
+        }
+        else
+        {
+            myShipIndex = (int)stream.ReceiveNext();
+        }
+    }
+
+    public void SetTarget()
+    {
+        pv.RPC(nameof(SelectAttackTarget), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void SelectAttackTarget()
+    {
+        //태그가 바꼈어
+        ChangeTagToEnemy();
+        //공격 대상이 나라고 전달했어
+        SpaceShipManager.Instance.SelectAttackTarget(myShipIndex);
+    }
+
+    public void ChangeTagToEnemy()
+    {
+        gameObject.tag = "Enemy";
+    }
+
+    public void SetTargetRPC(Vector3 position)
+    {
+        
+    }
 }

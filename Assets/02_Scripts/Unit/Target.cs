@@ -3,29 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Target : MonoBehaviour
+public interface ITarget
 {
-    private PhotonView pv;
-    private SpaceShipManager spaceShipManager;
+    public void SetTarget();
 
-
-    private void Start() {
-        spaceShipManager = SpaceShipManager.Instance;
-        pv = GetComponent<PhotonView>();
-    }
-
-    public void SetTarget(){
-        Vector3 position = transform.position;
-        if(position != null) pv.RPC(nameof(SetTargetRPC), RpcTarget.All, position);
-    }
-
-    public void ChangeTagToEnemy(){
-        gameObject.tag = "Enemy";
-    }
-
-    [PunRPC]
-    void SetTargetRPC(Vector3 position){
-        spaceShipManager.RegisterTarget(position);
-    }
+    public void ChangeTagToEnemy();
+    void SetTargetRPC(Vector3 position);
 
 }

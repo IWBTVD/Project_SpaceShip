@@ -17,14 +17,15 @@ public class NetworkedPlayer : MonoBehaviourPun, IPunObservable
     private WorldBoardManager worldBoardManager;
 
     // Grabber 껏다 켰다 하기 위한 변수값
-    public CustomOVRGrabber ovrGrabber; 
-
+    public CustomOVRGrabber ovrGrabber;
 
     //내 몸
     public Transform[] myBody;
 
     private Vector3 pos;
     private SyncData[] syncData;
+
+    public WorldBoardManager.Turn characterTurn;
 
     private void Awake()
     {

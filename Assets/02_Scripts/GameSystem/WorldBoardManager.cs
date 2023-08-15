@@ -54,9 +54,12 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
     public event Action<GameStage> OnCurrentStageChanged;
 
     private Turn currentTurn;
+    public Turn CurrentTurn
+    {
+        get { return currentTurn; }
+    }
+
     public event Action<Turn> OnCurrentTurnChanged;
-
-
 
     /// <summary>
     ///처음에 일정 시간 ex 3분 안에 이번 게임에 사용할 말과 위치 등등 정하기..
@@ -290,10 +293,7 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
         TriggerCurrentTurnChangedEvent();
     }
 
-    public Turn CurrentTurn
-    {
-        get { return currentTurn; }
-    }
+
     
 
     

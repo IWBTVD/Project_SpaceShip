@@ -42,12 +42,15 @@ public class HandDebugSkeletonInfo : MonoBehaviour
             //한번만 출력할거면 한번만 출력함
             if (handInfoFrequency == HandInfoFrequency.Once && !isHandInfoDisplayed)
             {
-                DisplayBoneInfo();
+                //DisplayBoneInfo();
                 isHandInfoDisplayed = true;
             }
             //계속 출력해야하면 계속 출력함
             else if (handInfoFrequency == HandInfoFrequency.Repeat)
-                DisplayBoneInfo();
+            {
+                //DisplayBoneInfo();
+            }
+
         }
     }
 

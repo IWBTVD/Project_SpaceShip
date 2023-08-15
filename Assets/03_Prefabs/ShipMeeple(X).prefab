@@ -1397,6 +1397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979418bdc24e32046a8c7d4460709a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawVirtualBottomLine: {fileID: 0}
+  myShipIndex: 0
 --- !u!1 &2103518318178008345
 GameObject:
   m_ObjectHideFlags: 0

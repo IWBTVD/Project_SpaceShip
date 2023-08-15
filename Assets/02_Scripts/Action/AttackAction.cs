@@ -37,12 +37,12 @@ public class AttackAction : BaseAction
         return true;
     }
 
-    public void StartAttakAction(Vector3 targetPosition)
+    public void StartAttakAction(Transform targetTransform)
     {
-        missileLauncher.targetPosition = targetPosition;
-        Debug.Log("StartAttakAction 안의 Enemy임 " + targetPosition);
+        missileLauncher.targetTransform = targetTransform;
+        Debug.Log("StartAttakAction 안의 Enemy임 " + targetTransform);
         missileLauncher.MissileLaunch();
-        TakeAction(targetPosition, WhenTurnEnd);
+        TakeAction(targetTransform.position, WhenTurnEnd);
     }
 
     private void WhenTurnEnd(){

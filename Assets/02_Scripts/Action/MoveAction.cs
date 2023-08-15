@@ -89,7 +89,9 @@ public class MoveAction : BaseAction
     private void Kong()// 공
     {
         SpaceShipManager.Instance.currentlyMovedSpaceshipIndex = GetComponent<SpaceUnit>().myShipIndex;
+        
         isMoving = false;
+        SpaceShipManager.Instance.currentlyMovedSpaceshipIndex.DebugLog();
         Debug.Log("이동 종료");
     }
     

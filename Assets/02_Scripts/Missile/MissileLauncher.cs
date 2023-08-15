@@ -7,7 +7,7 @@ public class MissileLauncher : MonoBehaviour
     [SerializeField] GameObject m_goMissile = null;
     [SerializeField] Transform m_tfMissileSpawn = null;
     
-    public Vector3 targetPosition;
+    public Transform targetTransform;
     // void Update()
     // {
     //     if(Input.GetKeyDown(KeyCode.S)){
@@ -21,6 +21,6 @@ public class MissileLauncher : MonoBehaviour
 
     public void MissileLaunch(){
         GameObject t_missile = Instantiate(m_goMissile, m_tfMissileSpawn.position, m_tfMissileSpawn.rotation);
-        t_missile.GetComponent<Missile0_02>().targetPosition = targetPosition ;
+        t_missile.GetComponent<Missile0_02>().targetTransform = targetTransform ;
     }
 }

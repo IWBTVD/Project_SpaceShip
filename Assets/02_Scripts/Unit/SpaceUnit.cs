@@ -11,6 +11,22 @@ public enum Team {
     Blue,
 }
 
+public struct ShipIndex{
+    public Team team;
+    public int index;
+
+    public ShipIndex(Team team, int index)
+    {
+        this.team = team;
+        this.index = index;
+    }
+
+    public void DebugLog() 
+    { 
+        Debug.LogFormat("team = {0} index = {1}", team, index); 
+    } 
+}
+
 public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
 {
     private const int ACTION_POINT_MAX = 2;
@@ -50,7 +66,7 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
 
     private PhotonView pv;
 
-    public int myShipIndex = 0;
+    public ShipIndex myShipIndex;
 
     public void Awake()
     {
@@ -133,20 +149,11 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
 
     }
 
-    public void OnTargetSelected()
+    public void Attack(Transform targetTransform)
     {
-        // this.target = target;
-        //targetPosition = position;
-        //Attack();
-        //pv.RPC(nameof(AttackInvoked), RpcTarget.All, );
-    }
-    
-    public void Attack()
-    {
-        if(targetPosition != null && actionPoints == 1){ // 1로 고쳐야함
+        if(actionPoints == 1){ // 1로 고쳐야함
            
-            attackAction.StartAttakAction(targetPosition);
-            Debug.Log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + targetPosition);
+            attackAction.StartAttakAction(targetTransform);
             Debug.Log("공격한다!!");
             actionPoints -= 1;
             
@@ -171,7 +178,7 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
     // 상태가 변할때마다 이벤트에 넣을거 추가
     private void OnCurrentStageChangedHandler(WorldBoardManager.GameStage stage)
     {
-        Debug.Log("Current stage changed: " + stage.ToString());
+        Debug.Log("지금 stage changed: " + stage.ToString());
         
         switch (stage)
         {
@@ -218,7 +225,7 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
         }
         else
         {
-            myShipIndex = (int)stream.ReceiveNext();
+            myShipIndex = (ShipIndex)stream.ReceiveNext();
         }
     }
 
@@ -244,5 +251,14 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
     public void SetTargetRPC(Vector3 position)
     {
         
+    }
+
+    private void RegisterShipToSpaceShipManagerList(){
+        if(myShipIndex.team == Team.Red){
+            spaceShipManager.RegisterRedShip(this);
+        }
+        else{
+            spaceShipManager.RegisterBlueShip(this);
+        }
     }
 }

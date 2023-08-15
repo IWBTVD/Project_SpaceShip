@@ -2,27 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Beacon : MonoBehaviour
 {
-    public bool isUnit = false;
+    public ShipIndex myIndex;
+    public GameObject spaceshipDetectionVisual;
+    SpaceUnit su;
 
-    [SerializeField] GameObject spaceshipDetectionVisual;
-
-    private void Start()
-    {
-        // Register this beacon with the BeaconManager
-        BeaconManager.Instance.RegisterBeacon(this);
-
-    }
-
-
+    public bool isUnit;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("SpaceShip") && !isUnit)
+        if (other.gameObject.CompareTag("SpaceShip"))
         {
-            Debug.Log("Collision with Bullet detected: 1");
             spaceshipDetectionVisual.SetActive(true);
-            
+            isUnit = true;
         }
     }
 
@@ -30,8 +23,8 @@ public class Beacon : MonoBehaviour
     {
         if (other.gameObject.CompareTag("SpaceShip"))
         {
-            isUnit = false;
             spaceshipDetectionVisual.SetActive(false);
+            isUnit = false;
         }
     }
 }

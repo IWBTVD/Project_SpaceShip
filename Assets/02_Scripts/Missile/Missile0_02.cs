@@ -9,7 +9,7 @@ public class Missile0_02 : MonoBehaviour
 
     [SerializeField] float m_speed = 0f;
     float m_currentSpeed = 0f;
-    public Vector3 targetPosition;
+    public Transform targetTransform;
     [SerializeField] ParticleSystem m_psEffect = null;
     [SerializeField] LayerMask m_layerMask = 0;
     
@@ -35,14 +35,14 @@ public class Missile0_02 : MonoBehaviour
 
      void Update()
     {
-        if (targetPosition != null)
+        if (targetTransform != null)
         {
             if (m_currentSpeed <= m_speed) 
                 m_currentSpeed += m_speed * Time.deltaTime;
 
             transform.position += transform.forward * m_currentSpeed * Time.deltaTime;
 
-            Vector3 t_dir = (targetPosition - transform.position).normalized;
+            Vector3 t_dir = (targetTransform.position - transform.position).normalized;
             transform.forward = Vector3.Lerp(transform.forward, t_dir, 0.5f); // Increase the second parameter for faster rotation
 
         }

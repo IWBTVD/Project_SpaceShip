@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class BeaconManager : MonoBehaviour
 {
-    // Static reference to the singleton instance
     private static BeaconManager instance;
 
-    // Public property to access the singleton instance
     public static BeaconManager Instance
     {
         get { return instance; }
     }
 
-    // List to store all beacon instances
-    private List<Beacon> allBeacons = new List<Beacon>();
+    [SerializeField] List<Beacon> redBeacon = new ();
+    [SerializeField] List<Beacon> blueBeacon = new ();
+
 
     private void Awake()
     {
-        // Ensure there's only one instance of BeaconManager
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -29,34 +27,40 @@ public class BeaconManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Add beacon to the list when created
-    public void RegisterBeacon(Beacon beacon)
+    private void Start()
     {
-        allBeacons.Add(beacon);
-    }
+        int i = 1;
 
-    // Access isUnit values of all beacons
-    public List<bool> GetAllBeaconIsUnitValues()
-    {
-        List<bool> isUnitValues = new List<bool>();
-        foreach (var beacon in allBeacons)
+        foreach (var beacon in redBeacon)
         {
-            isUnitValues.Add(beacon.isUnit);
+            beacon.myIndex = new ShipIndex(Team.Red, i);
+            beacon.myIndex.DebugLog();
+            i++;
         }
-        return isUnitValues;
+
+        i = 1;
+
+        foreach (var beacon in blueBeacon)
+        {
+            beacon.myIndex = new ShipIndex(Team.Blue, i);
+            beacon.myIndex.DebugLog();
+            i++;
+        }
     }
 
     public void DisactiveAllBeacon()
     {
         // 모든 비콘 비활성화
-        foreach (var beacon in allBeacons)
+        foreach (var beacon in redBeacon)
+        {
+            beacon.gameObject.SetActive(false);
+        }
+
+        // 모든 비콘 비활성화
+        foreach (var beacon in blueBeacon)
         {
             beacon.gameObject.SetActive(false);
         }
     }
 
-    public List<Beacon> GetAllBeacons()
-    {
-        return allBeacons;
-    }
 }

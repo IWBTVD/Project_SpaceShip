@@ -9,9 +9,13 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
     Beacon beacon;
 
     public GameObject origin;
-
+    private SpaceUnit spaceUnit;
 
     private Vector3 moveToCenterPosition;
+
+    private void Start() {
+        spaceUnit = GetComponent<SpaceUnit>();
+    }
     private void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Beacon"))
@@ -21,7 +25,9 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
             // 비콘과 닿을때 비콘 정보와 스크립트를 읽어오기
             beaconTransform = other.transform;
             beacon = beaconTransform.GetComponent<Beacon>();
+            spaceUnit.myShipIndex = beacon.myIndex;
             MoveToCenter();
+            spaceUnit.myShipIndex.DebugLog();
         }
     }
 
@@ -34,6 +40,8 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
             // 값 리셋
             beaconTransform = null;
             beacon = null;
+            spaceUnit.myShipIndex = new ShipIndex();
+            spaceUnit.myShipIndex.DebugLog();
         }
     }
 

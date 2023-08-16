@@ -156,7 +156,7 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
 
         else if (isHostReady && isMemberReady)
         {
-            uiText.text = "Ready to play";
+            uiText.text = currentTurn.ToString();
             Debug.Log("양 측 플레이어가 모두 준비를 마침");
             NextStage(); // 지금은 각자 돌아감 뭔가 서버에서 하면 좋을거 같음
             return true;

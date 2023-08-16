@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class SpaceShipPlaceToBeacon : MonoBehaviourPun , IPunObservable
+public class SpaceShipPlaceToBeacon : MonoBehaviourPun
 {
     Transform beaconTransform;
-    Beacon spaceshipScript;
+    Beacon beacon;
 
     public GameObject origin;
 
+
+    private Vector3 moveToCenterPosition;
     private void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Beacon"))
@@ -18,7 +20,8 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun , IPunObservable
             
             // 비콘과 닿을때 비콘 정보와 스크립트를 읽어오기
             beaconTransform = other.transform;
-            spaceshipScript = beaconTransform.GetComponent<Beacon>();
+            beacon = beaconTransform.GetComponent<Beacon>();
+            MoveToCenter();
         }
     }
 
@@ -27,16 +30,17 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun , IPunObservable
         {
             Debug.Log("Beacon Exit detected: 1");
             
-            // 비콘과 빠질때 비콘 정보와 스크립트를 읽어오기
+            // 비콘과 빠질때 비콘 정보와 스크립트를 초기화
+            // 값 리셋
             beaconTransform = null;
-            spaceshipScript = null;
+            beacon = null;
         }
     }
 
  
     public void MoveToCenter()
     {
-        if (spaceshipScript.isUnit == true)
+        if (beacon != null &&beacon.isUnit == true)
         {
             Debug.Log("Unit is assigned!");
             return;
@@ -44,8 +48,13 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun , IPunObservable
 
         if (beaconTransform != null)
         {
-            // 우주선을 이동하고 isUnit 플래그를 모든 클라이언트에 설정하기 위해 RPC 호출
-            photonView.RPC(nameof(MoveToCenterRPC), RpcTarget.All);
+            transform.position = beaconTransform.position;
+            origin.transform.position = beaconTransform.position;
+            // 방향 이동
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            origin.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            
+            beacon.isUnit = true;
         }
         else
         {
@@ -54,34 +63,6 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun , IPunObservable
         }
     }
 
-
-    [PunRPC]
-    private void MoveToCenterRPC()
-    {
-
-        // 위치 이동
-        transform.position = beaconTransform.transform.position;
-        origin.transform.position = beaconTransform.transform.position;
-        // 방향 이동
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        origin.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-
-        spaceshipScript.isUnit = true;
-
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(beaconTransform);
-        }
-
-        else
-        {
-           beaconTransform = (Transform)stream.ReceiveNext();
-        }
-    }
 }
 
   

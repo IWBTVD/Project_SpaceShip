@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Oculus.Interaction;
 using Photon.Pun;
-public class SpaceUnit : MonoBehaviour
+public class SpaceUnit : MonoBehaviour 
 {
     private const int ACTION_POINT_MAX = 2;
 

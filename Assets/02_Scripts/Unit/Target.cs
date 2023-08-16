@@ -16,6 +16,7 @@ public class Target : MonoBehaviour
 
     public void SetTarget(){
         Vector3 position = transform.position;
+        gameObject.tag = "Enemy";
         if(position != null) pv.RPC(nameof(SetTargetRPC), RpcTarget.All, position);
     }
 

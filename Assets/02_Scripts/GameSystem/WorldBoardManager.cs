@@ -277,13 +277,16 @@ public class WorldBoardManager : MonoBehaviourPun, IPunObservable
         switch (currentTurn)
         {
             case Turn.None:
-                currentTurn = Turn.Red; 
+                currentTurn = Turn.Red;
+                uiText.SetText("None");
                 break;
             case Turn.Red:
                 currentTurn = Turn.Blue; 
+                uiText.SetText("Blue");
                 break;
             case Turn.Blue:
                 currentTurn = Turn.Red; 
+                uiText.SetText("Red");
                 break;
         }
 

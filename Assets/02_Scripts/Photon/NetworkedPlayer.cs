@@ -26,6 +26,8 @@ public class NetworkedPlayer : MonoBehaviourPun, IPunObservable
     private Vector3 pos;
     private SyncData[] syncData;
 
+    public WorldBoardManager.Turn characterTurn { get; internal set; }
+
     private void Awake()
     {
         ovrPlayerController = GetComponentInChildren<OVRPlayerController>();

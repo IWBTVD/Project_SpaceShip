@@ -8,9 +8,10 @@ public class StartButton : MonoBehaviourPun
     [SerializeField] Oculus.Interaction.InteractableUnityEventWrapper eventWrapper;
 
     [PunRPC]
-    public void DeactivateButton()
+    private void DeactivateButton()
     {
         gameObject.SetActive(false);
+        Debug.Log("@@@@@버튼 사라짐!");
     }
 
     public void OnEnable()
@@ -34,7 +35,7 @@ public class StartButton : MonoBehaviourPun
     public void StartGame(){
         // 타이머 시작을 포톤으로 알림 이 안에 다음 단계로 진입 코드 담겨 있음
         WorldBoardManager.Instance.SetStandByPhase();
-        photonView.RPC("DeactivateButton", RpcTarget.All);
+        photonView.RPC(nameof(DeactivateButton), RpcTarget.All);
     }
 
     private void Update() {

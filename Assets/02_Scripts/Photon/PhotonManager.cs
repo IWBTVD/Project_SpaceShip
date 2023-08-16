@@ -58,12 +58,24 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void SpawnPlayer()
     {
-        if(photonView.IsMine){
+        ExitGames.Client.Photon.Hashtable teamCustomProperty = new();
+        if (PhotonNetwork.LocalPlayer == PhotonNetwork.MasterClient)
+        {
             spawnedPlayerPrefab = PhotonNetwork.Instantiate("RedCrew", transform.position, transform.rotation);
-            
-        }else{
+
+            teamCustomProperty.Add("team", "Red");
+            PhotonNetwork.LocalPlayer.SetCustomProperties(teamCustomProperty);
+
+            spawnedPlayerPrefab.GetComponent<NetworkedPlayer>().characterTurn = WorldBoardManager.Turn.Red;
+        }
+        else
+        {
             spawnedPlayerPrefab = PhotonNetwork.Instantiate("BlueCrew", transform.position, transform.rotation);
-        
+
+            teamCustomProperty.Add("team", "Blue");
+            PhotonNetwork.LocalPlayer.SetCustomProperties(teamCustomProperty);
+
+            spawnedPlayerPrefab.GetComponent<NetworkedPlayer>().characterTurn = WorldBoardManager.Turn.Blue;
         }
     }
 }

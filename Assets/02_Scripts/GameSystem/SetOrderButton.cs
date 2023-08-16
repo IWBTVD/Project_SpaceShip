@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class SetOrderButton : MonoBehaviour
+public class SetOrderButton : MonoBehaviourPun
 {
     [SerializeField] Oculus.Interaction.InteractableUnityEventWrapper eventWrapper;
 
@@ -33,6 +34,12 @@ public class SetOrderButton : MonoBehaviour
     }
 
     public void SendTeamColor(){
+        photonView.RPC(nameof(SendTeamColorRPC), RpcTarget.All);
+    }
+
+
+    [PunRPC]
+    private void SendTeamColorRPC(){
         worldBoardManager.SetOrder(teamColor);
 
         gameObject.SetActive(false);

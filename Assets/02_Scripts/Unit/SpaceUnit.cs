@@ -105,7 +105,7 @@ public class SpaceUnit : MonoBehaviour , IPunObservable
      private void Move()
     {
         if(actionPoints == 2 && spaceShipManager.currentHasMovedShip == false){
-    
+            arrivalPoint = drawVirtualBottomLine.GetEndPoint();
             pv.RPC(nameof(MovePRC), RpcTarget.All);
         }else{
             return;
@@ -115,8 +115,6 @@ public class SpaceUnit : MonoBehaviour , IPunObservable
     [PunRPC]
     private void MovePRC()
     {
-    
-        arrivalPoint = drawVirtualBottomLine.GetEndPoint();
         moveAction.StartMoveAction(arrivalPoint);
         Debug.Log("이동한다!!");
         spaceShipManager.currentHasMovedShip = true;
@@ -204,12 +202,12 @@ public class SpaceUnit : MonoBehaviour , IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(transform.position);
+            stream.SendNext(arrivalPoint);
         }
 
         else
         {
-            transform.position = (Vector3)stream.ReceiveNext();
+            arrivalPoint = (Vector3)stream.ReceiveNext();
 
         }
     }

@@ -19,6 +19,7 @@ public class SpaceShipManager : MonoBehaviour, IPunObservable
     
     private Vector3 targetPosition;
 
+    public bool currentHasMovedShip = false;
     private void Awake()
     {
         
@@ -35,6 +36,16 @@ public class SpaceShipManager : MonoBehaviour, IPunObservable
     public void RegisterShip(GameObject spaceShip)
     {
         allShips.Add(spaceShip);
+        LogListContents(allShips);
+    }
+
+     private void LogListContents(List<GameObject> listToLog) // Change the type to match your list's type
+    {
+        Debug.Log("List Contents:");
+        foreach (var item in listToLog)
+        {
+            Debug.Log(item.name);
+        }
     }
 
     public void RegisterTarget(Vector3 position)
@@ -45,6 +56,20 @@ public class SpaceShipManager : MonoBehaviour, IPunObservable
 
     public Vector3 GetTarget(){
         return targetPosition;
+    }
+
+    public void ProtectiveshipAttack(GameObject gameObject){
+         foreach (GameObject ship in allShips)
+        {
+            if (ship != gameObject)
+            {
+                Collider shipCollider = ship.GetComponent<Collider>();
+                if (shipCollider != null)
+                {
+                    shipCollider.enabled = false;
+                }
+            }
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

@@ -104,7 +104,7 @@ public class SpaceUnit : MonoBehaviour
 
      private void Move()
     {
-        if(actionPoints == 2){
+        if(actionPoints == 2 && spaceShipManager.currentHasMovedShip == false){
     
             pv.RPC(nameof(MovePRC), RpcTarget.All);
         }else{
@@ -119,6 +119,7 @@ public class SpaceUnit : MonoBehaviour
         arrivalPoint = drawVirtualBottomLine.GetEndPoint();
         moveAction.StartMoveAction(arrivalPoint);
         Debug.Log("이동한다!!");
+        spaceShipManager.currentHasMovedShip = true;
         
         actionPoints -= 1;
 

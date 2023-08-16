@@ -47,6 +47,7 @@ public class AttackAction : BaseAction
 
     private void WhenTurnEnd(){
         worldBoardManager.nextTurn();
+        SpaceShipManager.Instance.currentHasMovedShip = false;
         Debug.Log("턴 끝났습니다");
     }
 

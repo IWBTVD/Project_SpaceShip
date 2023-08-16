@@ -89,6 +89,7 @@ public class MoveAction : BaseAction
     private void Kong()// 공
     {
         isMoving = false;
+        // SpaceShipManager.Instance.ProtectiveshipAttack(gameObject);
         Debug.Log("이동 종료");
     }
     

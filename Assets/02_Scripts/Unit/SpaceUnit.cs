@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Oculus.Interaction;
 using Photon.Pun;
-public class SpaceUnit : MonoBehaviour 
+public class SpaceUnit : MonoBehaviour , IPunObservable
 {
     private const int ACTION_POINT_MAX = 2;
 
@@ -200,4 +200,17 @@ public class SpaceUnit : MonoBehaviour
 
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+        }
+
+        else
+        {
+            transform.position = (Vector3)stream.ReceiveNext();
+
+        }
+    }
 }

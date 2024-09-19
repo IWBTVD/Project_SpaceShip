@@ -66,7 +66,7 @@ public class Spaceship : MonoBehaviour
         speed += boosterGear * accelAmount * accelEase * Time.fixedDeltaTime;
 
         //자동 속도 보정 여부
-        if(boosterGear == 0 && enableCalibrate)
+        if (boosterGear == 0 && enableCalibrate)
         {
             speed += (defaultSpeed - speed) * speedReciprocal * calibrateAmount * Time.fixedDeltaTime;
         }
@@ -88,18 +88,18 @@ public class Spaceship : MonoBehaviour
             return;
 
         speed += inputStrength * 500 * Time.deltaTime;
-        if(speed < 0)
+        if (speed < 0)
         {
             speed = 0f;
         }
-        else if(speed > 3000f)
+        else if (speed > 3000f)
         {
             speed = 3000f;
         }
 
         //속도 2000이 기본값 : 1
         float boosterScale = speed / 2000f;
-        foreach(GameObject go in boosterObjects)
+        foreach (GameObject go in boosterObjects)
         {
             Vector3 originalScale = boosterOriginalLocalScaleList[boosterObjects.IndexOf(go)];
             go.transform.localScale = originalScale * boosterScale;

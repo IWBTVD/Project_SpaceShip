@@ -23620,6 +23620,7 @@ MonoBehaviour:
   - {fileID: 7084424904993816492}
   - {fileID: 325085556203623855}
   - {fileID: 1793293380656647010}
+  characterTurn: 0
 --- !u!1 &5578581068834812886
 GameObject:
   m_ObjectHideFlags: 0

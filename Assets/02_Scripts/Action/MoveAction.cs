@@ -11,7 +11,7 @@ public class MoveAction : BaseAction
     [SerializeField] private float maxMoveDistance = 5f;
     private Vector3 destination;
     public Transform actualVisualTransform;
-    
+
     private float moveDuration = 2f;
 
     // 비행선 움직이는 중인지 아닌지
@@ -19,8 +19,8 @@ public class MoveAction : BaseAction
 
     //잡으면 이동 준비
     //놓으면 이동
-    
-    private void Start() 
+
+    private void Start()
     {
         // actualVisualTransform = transform.Find("ActualVisual")?.gameObject.transform;
     }
@@ -82,17 +82,17 @@ public class MoveAction : BaseAction
 
         actualVisualTransform.position = worldPosition;
         transform.position = actualVisualTransform.position;
-        
+
         ActionComplete();
     }
 
     private void Kong()// 공
     {
         SpaceShipManager.Instance.currentlyMovedSpaceshipIndex = GetComponent<SpaceUnit>().myShipIndex;
-        
+
         isMoving = false;
         SpaceShipManager.Instance.currentlyMovedSpaceshipIndex.DebugLog();
         Debug.Log("이동 종료");
     }
-    
+
 }

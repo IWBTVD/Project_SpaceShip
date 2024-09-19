@@ -12,7 +12,7 @@ public class Missile0_02 : MonoBehaviour
     public Transform targetTransform;
     [SerializeField] ParticleSystem m_psEffect = null;
     [SerializeField] LayerMask m_layerMask = 0;
-    
+
     //미사일의 데미지 우주선마다 다름
     private int damage;
     IEnumerator LaunchDelay()
@@ -33,11 +33,11 @@ public class Missile0_02 : MonoBehaviour
         StartCoroutine(LaunchDelay());
     }
 
-     void Update()
+    void Update()
     {
         if (targetTransform != null)
         {
-            if (m_currentSpeed <= m_speed) 
+            if (m_currentSpeed <= m_speed)
                 m_currentSpeed += m_speed * Time.deltaTime;
 
             transform.position += transform.forward * m_currentSpeed * Time.deltaTime;
@@ -48,8 +48,10 @@ public class Missile0_02 : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if(other.transform.CompareTag("Enemy")){
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Enemy"))
+        {
             Destroy(gameObject);
             other.tag = "SpaceShip";
         }

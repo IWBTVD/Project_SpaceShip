@@ -13,15 +13,16 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
 
     private Vector3 moveToCenterPosition;
 
-    private void Start() {
+    private void Start()
+    {
         spaceUnit = GetComponent<SpaceUnit>();
     }
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Beacon"))
         {
             Debug.Log("Beacon Enter detected: 1");
-            
+
             // 비콘과 닿을때 비콘 정보와 스크립트를 읽어오기
             beaconTransform = other.transform;
             beacon = beaconTransform.GetComponent<Beacon>();
@@ -31,11 +32,12 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
         }
     }
 
-    private void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider other)
+    {
         if (other.gameObject.CompareTag("Beacon"))
         {
             Debug.Log("Beacon Exit detected: 1");
-            
+
             // 비콘과 빠질때 비콘 정보와 스크립트를 초기화
             // 값 리셋
             beaconTransform = null;
@@ -45,10 +47,10 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
         }
     }
 
- 
+
     public void MoveToCenter()
     {
-        if (beacon != null &&beacon.isUnit == true)
+        if (beacon != null && beacon.isUnit == true)
         {
             Debug.Log("Unit is assigned!");
             return;
@@ -61,7 +63,7 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
             // 방향 이동
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             origin.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            
+
             beacon.isUnit = true;
         }
         else
@@ -73,4 +75,4 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
 
 }
 
-  
+

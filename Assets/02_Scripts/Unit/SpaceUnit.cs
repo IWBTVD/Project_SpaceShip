@@ -5,13 +5,15 @@ using System;
 using Oculus.Interaction;
 using Photon.Pun;
 
-public enum Team { 
+public enum Team
+{
     None,
     Red,
     Blue,
 }
 
-public struct ShipIndex{
+public struct ShipIndex
+{
     public Team team;
     public int index;
 
@@ -21,20 +23,20 @@ public struct ShipIndex{
         this.index = index;
     }
 
-    public void DebugLog() 
-    { 
-        Debug.LogFormat("team = {0} index = {1}", team, index); 
-    } 
+    public void DebugLog()
+    {
+        Debug.LogFormat("team = {0} index = {1}", team, index);
+    }
 }
 
-public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
+public class SpaceUnit : MonoBehaviourPun, IPunObservable, ITarget
 {
     private const int ACTION_POINT_MAX = 2;
 
 
     private WorldBoardManager worldBoardManager;
     private SpaceShipManager spaceShipManager;
-    
+
     //[Header("필수 할당요소")]
     //[SerializeField, Tooltip("우주선 비주얼")] private Transform spaceshipVisual;
     //[SerializeField, Tooltip("ActualVisual에서 사용할 마테리얼")] private Material spaceshipMaterial;
@@ -54,7 +56,7 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
     private SpaceShipPlaceToBeacon spaceShipPlaceToBeacon;
     private Vector3 arrivalPoint;
     private Vector3 targetPosition;
-    
+
     private WorldBoardManager.GameStage currentStage;
     private int actionPoints;
 
@@ -78,23 +80,23 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
         actionPoints = ACTION_POINT_MAX;
     }
 
-    private void Start() 
+    private void Start()
     {
         worldBoardManager = WorldBoardManager.Instance;
         worldBoardManager.OnCurrentStageChanged += OnCurrentStageChangedHandler;
-        
+
         spaceShipManager = SpaceShipManager.Instance;
         //spaceShipManager.RegisterShip(gameObject);
-        
-        eventWrapper  = GetComponent<Oculus.Interaction.PointableUnityEventWrapper>();
-        
+
+        eventWrapper = GetComponent<Oculus.Interaction.PointableUnityEventWrapper>();
+
         interactableUnityEventWrapper = GetComponent<InteractableUnityEventWrapper>();
-        
+
         spaceShipPlaceToBeacon = GetComponent<SpaceShipPlaceToBeacon>();
 
         firstTransform = transform;
-       
-        
+
+
     }
 
     private void OnDestroy()
@@ -105,34 +107,22 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
             worldBoardManager.OnCurrentStageChanged -= OnCurrentStageChangedHandler;
         }
 
-        if(spaceShipManager != null)
+        if (spaceShipManager != null)
         {
 
         }
-        
+
 
     }
-
-    // private void Move()
-    // {
-    //     if(actionPoints == 2){
-    
-    //         targetPosition = drawVirtualBottomLine.GetEndPoint();
-    //         moveAction.StartMoveAction(targetPosition);
-    //         Debug.Log("이동한다!!");
-            
-    //         actionPoints -= 1;
-    //     }else{
-    //         return;
-    //     }
-    // }
-
-     private void Move()
+    private void Move()
     {
-        if(actionPoints == 2){
-    
+        if (actionPoints == 2)
+        {
+
             pv.RPC(nameof(MovePRC), RpcTarget.All);
-        }else{
+        }
+        else
+        {
             return;
         }
     }
@@ -140,31 +130,35 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
     [PunRPC]
     private void MovePRC()
     {
-    
+
         arrivalPoint = drawVirtualBottomLine.GetEndPoint();
         moveAction.StartMoveAction(arrivalPoint);
         Debug.Log("이동한다!!");
-        
+
         actionPoints -= 1;
 
     }
 
     public void Attack(Transform targetTransform)
     {
-        if(actionPoints == 1){ // 1로 고쳐야함
-           
+        if (actionPoints == 1)
+        {
+
             attackAction.StartAttakAction(targetTransform);
             Debug.Log("공격한다!!");
             actionPoints -= 1;
-            
+
         }
-        else{
-            if(actionPoints == 0){
+        else
+        {
+            if (actionPoints == 0)
+            {
                 Debug.Log("액션 끝남");
             }
-            else{
+            else
+            {
                 Debug.Log("적 없음");
-            } 
+            }
         }
     }
 
@@ -172,14 +166,14 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
     {
         transform.position = firstTransform.position;
 
-        Debug.Log(firstTransform.position +" || " + transform.position);
+        Debug.Log(firstTransform.position + " || " + transform.position);
     }
 
     // 상태가 변할때마다 이벤트에 넣을거 추가
     private void OnCurrentStageChangedHandler(WorldBoardManager.GameStage stage)
     {
         Debug.Log("지금 stage changed: " + stage.ToString());
-        
+
         switch (stage)
         {
             case WorldBoardManager.GameStage.Standby:
@@ -192,7 +186,7 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
                 eventWrapper.WhenUnselect.RemoveAllListeners();
                 //비콘에 배치 하는 함수 추가
                 eventWrapper.WhenUnselect.AddListener(spaceShipPlaceToBeacon.MoveToCenter);
-                
+
                 break;
 
             case WorldBoardManager.GameStage.GamePlaying:
@@ -219,7 +213,7 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if(stream.IsWriting)
+        if (stream.IsWriting)
         {
             stream.SendNext(myShipIndex);
         }
@@ -250,14 +244,17 @@ public class SpaceUnit : MonoBehaviour, IPunObservable, ITarget
 
     public void SetTargetRPC(Vector3 position)
     {
-        
+
     }
 
-    private void RegisterShipToSpaceShipManagerList(){
-        if(myShipIndex.team == Team.Red){
+    private void RegisterShipToSpaceShipManagerList()
+    {
+        if (myShipIndex.team == Team.Red)
+        {
             spaceShipManager.RegisterRedShip(this);
         }
-        else{
+        else
+        {
             spaceShipManager.RegisterBlueShip(this);
         }
     }

@@ -811,7 +811,6 @@ GameObject:
   - component: {fileID: 8503586556047110962}
   - component: {fileID: 4467629436443168681}
   - component: {fileID: 3122091565867836359}
-  - component: {fileID: 7808765315673632715}
   m_Layer: 13
   m_Name: Cruiser_01
   m_TagString: SpaceShip
@@ -1187,9 +1186,9 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7808765315673632715}
-        m_TargetAssemblyTypeName: Target, Assembly-CSharp
-        m_MethodName: setTarget
+      - m_Target: {fileID: 633038895964937584}
+        m_TargetAssemblyTypeName: SpaceUnit, Assembly-CSharp
+        m_MethodName: SetTarget
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1248,18 +1247,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 8169004371155220638}
---- !u!114 &7808765315673632715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5568978178454622290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a5e3d11075a4649839ea8825b598a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5907406983308539481
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class Missile0_02 : MonoBehaviour
     private int damage;
     IEnumerator LaunchDelay()
     {
-        yield return new WaitUntil(() => m_rigid.velocity.y < 0f);
+        yield return new WaitUntil(() => m_rigid.linearVelocity.y < 0f);
         yield return new WaitForSeconds(0.1f);
 
         m_psEffect.Play();
@@ -52,6 +52,10 @@ public class Missile0_02 : MonoBehaviour
     {
         if (other.transform.CompareTag("Enemy"))
         {
+            // 맞은 우주선에 알림 → 그 순간 데미지 적용 (SpaceUnit.ReceiveAttack)
+            SpaceUnit victim = other.GetComponentInParent<SpaceUnit>();
+            if (victim) victim.NotifyMissileHit();
+            ShipFx.Hit(transform.position);
             Destroy(gameObject);
             other.tag = "SpaceShip";
         }

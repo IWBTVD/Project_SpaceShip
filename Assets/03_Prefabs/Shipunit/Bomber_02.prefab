@@ -1283,7 +1283,6 @@ GameObject:
   - component: {fileID: 6167399811592598716}
   - component: {fileID: 658736618074540639}
   - component: {fileID: 2670940969750051555}
-  - component: {fileID: 1052026846350396841}
   m_Layer: 13
   m_Name: Bomber_02
   m_TagString: SpaceShip
@@ -1693,9 +1692,9 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1052026846350396841}
-        m_TargetAssemblyTypeName: Target, Assembly-CSharp
-        m_MethodName: setTarget
+      - m_Target: {fileID: 8461929259744530446}
+        m_TargetAssemblyTypeName: SpaceUnit, Assembly-CSharp
+        m_MethodName: SetTarget
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1720,18 +1719,6 @@ MonoBehaviour:
   _whenSelectingInteractorViewRemoved:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1052026846350396841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5280602786557403784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a5e3d11075a4649839ea8825b598a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5688895075171623906
 GameObject:
   m_ObjectHideFlags: 0

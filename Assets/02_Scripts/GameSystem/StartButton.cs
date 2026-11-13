@@ -38,6 +38,8 @@ public class StartButton : MonoBehaviourPun
     }
 
     private void Update() {
+        // PC 테스트 모드에서는 S가 카메라 이동키라 Enter로 시작 (DesktopTestHarness가 처리)
+        if (DesktopTestHarness.Instance) return;
         if(Input.GetKeyDown(KeyCode.S)){
             StartGame();
         }

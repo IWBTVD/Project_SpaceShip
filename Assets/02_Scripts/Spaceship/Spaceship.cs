@@ -72,7 +72,7 @@ public class Spaceship : MonoBehaviour
         }
 
         //move forward
-        rigid.velocity = transform.forward * speed;
+        rigid.linearVelocity = transform.forward * speed;
     }
 
     public void GetRotateVector(Vector2 inputVector)

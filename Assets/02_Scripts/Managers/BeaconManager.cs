@@ -48,6 +48,21 @@ public class BeaconManager : MonoBehaviour
         }
     }
 
+    /// <summary>새 게임: 비콘을 다시 켜고 비어 있는 상태로</summary>
+    public void ResetAllBeacon()
+    {
+        foreach (var beacon in redBeacon) ResetBeacon(beacon);
+        foreach (var beacon in blueBeacon) ResetBeacon(beacon);
+    }
+
+    private static void ResetBeacon(Beacon beacon)
+    {
+        if (!beacon) return;
+        beacon.isUnit = false;
+        if (beacon.spaceshipDetectionVisual) beacon.spaceshipDetectionVisual.SetActive(false);
+        beacon.gameObject.SetActive(true);
+    }
+
     public void DisactiveAllBeacon()
     {
         // 모든 비콘 비활성화

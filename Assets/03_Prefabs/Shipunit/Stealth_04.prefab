@@ -2508,7 +2508,6 @@ GameObject:
   - component: {fileID: 6003166597827057150}
   - component: {fileID: 8108807784154870770}
   - component: {fileID: 673307057736610499}
-  - component: {fileID: 1418702799603591562}
   - component: {fileID: 3864421319572120490}
   - component: {fileID: 4457989273888472744}
   - component: {fileID: 3960913513498070813}
@@ -2805,18 +2804,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMoveDistance: 5
   actualVisualTransform: {fileID: 5757108538478009764}
---- !u!114 &1418702799603591562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7905133422791570680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a5e3d11075a4649839ea8825b598a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3864421319572120490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2897,9 +2884,9 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1418702799603591562}
-        m_TargetAssemblyTypeName: Target, Assembly-CSharp
-        m_MethodName: setTarget
+      - m_Target: {fileID: 5068642336102530556}
+        m_TargetAssemblyTypeName: SpaceUnit, Assembly-CSharp
+        m_MethodName: SetTarget
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

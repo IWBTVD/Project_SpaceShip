@@ -65,6 +65,8 @@ public class SpaceShipPlaceToBeacon : MonoBehaviourPun
             origin.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
             beacon.isUnit = true;
+            // 상대 화면에도 같은 비콘에 놓이게
+            if (spaceUnit) spaceUnit.SyncPlacement(beacon.myIndex);
         }
         else
         {

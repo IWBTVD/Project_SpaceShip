@@ -213,7 +213,7 @@ Shader "FORGE3D/HeatDepthFixed"
 			#endif
 			CBUFFER_END
 			sampler2D _Normals;
-			uniform float4 _CameraDepthTexture_TexelSize;
+			// uniform float4 _CameraDepthTexture_TexelSize; // URP 17 DeclareDepthTexture.hlsl에서 이미 선언
 
 
 						

@@ -42,7 +42,8 @@ public class OVRDeviceSelector
 #if PRIORITIZE_OCULUS_XR_SETTINGS
 			OculusSettings settings;
 			UnityEditor.EditorBuildSettings.TryGetConfigObject<OculusSettings>("Unity.XR.Oculus.Settings", out settings);
-			return settings.TargetQuest;
+			// xr.oculus 4.x에서 Quest 1 지원이 제거되어 TargetQuest 속성이 없음
+			return false;
 #else
 			OVRProjectConfig projectConfig = OVRProjectConfig.GetProjectConfig();
 			return projectConfig.targetDeviceTypes.Contains(OVRProjectConfig.DeviceType.Quest);

@@ -221,7 +221,7 @@ Shader "FORGE3D/WarpJumpTunnel"
 			#endif
 			CBUFFER_END
 			sampler2D _MainTex;
-			uniform float4 _CameraDepthTexture_TexelSize;
+			// uniform float4 _CameraDepthTexture_TexelSize; // URP 17 DeclareDepthTexture.hlsl에서 이미 선언
 
 
 			float2 TwistCustom33( float2 UV, float Twist )
